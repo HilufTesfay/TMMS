@@ -2,17 +2,24 @@
   "name": "server",
   "version": "1.0.0",
   "main": "server.js",
+  "type": "module",
   "scripts": {
-    "start": "nodm",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "set NODE_ENV=development& nodemon server.js",
+    "start-pro": " set NODE_ENV=production& nodemon server.js",
+    "test": "test"
+  },
+  "repository": {
+    "type": "github",
+    "url": "https://github.com/HilufTesfay/TMMS/"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "author": "Hiluf Tesfay",
+  "license": "MIT",
+  "description": "This project is university Teaching materials and class managment system ",
   "dependencies": {
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "joi": "^17.13.3",
     "mongodb": "^6.12.0",
     "mongoose": "^8.9.0"
   },
