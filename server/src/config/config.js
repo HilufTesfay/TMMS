@@ -1,5 +1,5 @@
 import { config } from "dotenv";
-import { envSchema } from "../validations/index";
+import { envSchema } from "../validations/index.js";
 
 const envPath = "D:/projects/TMMS/server/.env";
 config({ path: envPath });

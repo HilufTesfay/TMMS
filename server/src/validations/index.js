@@ -1,2 +1,2 @@
-import { envSchema } from "./envValidation";
+import { envSchema } from "./envValidation.js";
 export { envSchema };
