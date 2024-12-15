@@ -1,7 +1,16 @@
 import { config } from "dotenv";
-config({ path: "D:/projects/TMMS/server/.env" });
+import { envSchema } from "../validations/index";
 
-export const envVars = {
-  port: process.env.PORT || 6000,
-  dataBaseUrl: process.env.DB_CONNECTION_URL,
+const envPath = "D:/projects/TMMS/server/.env";
+config({ path: envPath });
+
+const { value: env, error } = envSchema
+  .prefs({ errors: { label: "key" } })
+  .validate(process.env);
+if (error) {
+}
+export const envConfig = {
+  port: env.PORT || 6000,
+  dataBaseUrl: env.DB_CONNECTION_URL,
+  env: env.NODE_ENV,
 };
