@@ -1,14 +1,38 @@
 import { format, transports, createLogger } from "winston";
-import { envConfig } from "./config";
-const { combine, timestamp, json, simple } = format;
-const file = new transports.File({ filename: "logs/server.log" });
-const console = new transports.Console({});
+const { combine, timestamp, json, simple, colorize } = format;
+import { envConfig } from "./config.js";
+//create transports option
 
-const logger = createLogger({
+// file transoport for http logs
+const httpFile = new transports.File({
   level: "info",
-  format: combine(timestamp(), json()),
-  transports: [file],
+  filename: `${envConfig.logPath}/httpLogs.log`,
 });
-if (envConfig.env === "development") {
-  logger.add(console);
+// file transoport for error logs
+const errFile = new transports.File({
+  filename: `${envConfig.logPath}/errorLogs.log`,
+  level: "error",
+});
+
+// console log
+const consoleTransport = new transports.Console({
+  format: combine(colorize(), simple()),
+});
+//create http logger
+const httpLogger = createLogger({
+  level: envConfig.env === "production" ? "info" : "debug",
+  format: combine(timestamp(), json()),
+  transports: [httpFile, consoleTransport],
+});
+//create error logger
+const errorLogger = createLogger({
+  level: "error",
+  format: combine(timestamp(), json()),
+  transports: [errFile, consoleTransport],
+});
+// remove console transport if it is in production stage
+if (envConfig.env === "production") {
+  httpLogger.remove(consoleTransport);
+  errorLogger.remove(consoleTransport);
 }
+export { httpLogger, errorLogger };

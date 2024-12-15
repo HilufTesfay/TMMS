@@ -13,4 +13,5 @@ export const envConfig = {
   port: env.PORT || 6000,
   dataBaseUrl: env.DB_CONNECTION_URL,
   env: env.NODE_ENV,
+  logPath: env.LOG_FILE_PATH,
 };

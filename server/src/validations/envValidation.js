@@ -6,7 +6,10 @@ const envSchema = Joi.object()
       .required()
       .default("mongodb://localhost:27017/tmms")
       .description("mongodb url"),
-    NODE_ENV: Joi.string().default("development").required(),
+    NODE_ENV: Joi.string().default("production").required(),
+    LOG_FILE_PATH: Joi.string()
+      .required()
+      .default("D:/projects/TMMS/server/app.log"),
   })
   .unknown();
 export { envSchema };
