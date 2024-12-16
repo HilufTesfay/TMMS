@@ -7,6 +7,7 @@ import { envConfig } from "./config.js";
 const httpFile = new transports.File({
   level: "info",
   filename: `${envConfig.logPath}/httpLogs.log`,
+  json: true,
 });
 // file transoport for error logs
 const errFile = new transports.File({
@@ -21,13 +22,13 @@ const consoleTransport = new transports.Console({
 //create http logger
 const httpLogger = createLogger({
   level: envConfig.env === "production" ? "info" : "debug",
-  format: combine(timestamp(), json()),
+  format: json(),
   transports: [httpFile, consoleTransport],
 });
 //create error logger
 const errorLogger = createLogger({
   level: "error",
-  format: combine(timestamp(), json()),
+  format: combine(json(), timestamp()),
   transports: [errFile, consoleTransport],
 });
 // remove console transport if it is in production stage

@@ -1,3 +1,4 @@
+import { json } from "express";
 import { httpLogger } from "./logger.js";
 //define morgan format
 const morganFormat =
@@ -5,17 +6,25 @@ const morganFormat =
 //define stream option to redirect morgan logs to Logger
 const stream = {
   write: (data) => {
-    const logData = {
-      userName: data.split(" ")[0],
-      ip: data.split(" ")[1],
-      method: data.split(" ")[2],
-      url: data.split(" ")[3],
-      status: data.split(" ")[4],
-      httpVersion: data.split(" ")[5],
-      responseTime: data.split(" ")[6],
-      Timestamp: data.split(" ")[7],
-    };
-    return httpLogger.info(JSON.stringify(logData));
+    const [
+      userName,
+      ipAddress,
+      method,
+      url,
+      status,
+      httpVersion,
+      responseTime,
+    ] = data.trim().split(" ");
+    return httpLogger.info("HTTP Acess Log", {
+      userName: userName === "-" ? "anonymous" : userName,
+      ipAddress: ipAddress,
+      method: method,
+      url: url,
+      status: Number(status),
+      httpVersion: Number(httpVersion),
+      responseTime: Number(responseTime),
+      timeStamp: new Date().toString(),
+    });
   },
 };
 export { morganFormat, stream };
