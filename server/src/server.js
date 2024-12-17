@@ -6,7 +6,7 @@ const server = app.listen(envConfig.port, () => {
   console.log(`server is listenning at port :${envConfig.port}`);
 });
 // define errror handler for uncaught errors
-const handleError = (error) => {
+const handleUncaughtError = (error) => {
   if (envConfig.env === "development") {
     console.log(error);
   }
@@ -26,8 +26,8 @@ const handleExit = (server) => {
   }
 };
 // node process listenning for possible uncuaght errors or for signal
-process.on("uncaughtException", handleError);
-process.on("unhandledRejection", handleError);
+process.on("uncaughtException", handleUncaughtError);
+process.on("unhandledRejection", handleUncaughtError);
 process.on("SIGTERM", (sig) => {
   errorLogger.error(sig);
   if (server) {
