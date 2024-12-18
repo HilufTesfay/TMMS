@@ -10,10 +10,11 @@ app.use(morgan(morganFormat, { stream }));
 app.use("/home", (req, res) => {
   res.send(" well come home");
 });
+//redirect here for not found API
 app.all("*", (req, res, next) => {
   const message = `${req.originalUrl} not found`;
   const statusCode = 404;
-  const error = new CustomError(statusCode, message, false);
+  const error = new CustomError(statusCode, message, true);
   next(error);
 });
 //call global error converter
