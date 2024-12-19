@@ -1,3 +1,4 @@
 import { CustomError } from "./customError.js";
+import { handleCatchError } from "./catchError.js";
 
-export { CustomError };
+export { CustomError, handleCatchError };

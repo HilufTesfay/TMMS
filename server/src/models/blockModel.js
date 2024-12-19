@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { format } from "./plugins/plugins.js";
-const blockSchema = new mongoose.Schema(
+const buildingSchema = new mongoose.Schema(
   {
     blockNumber: {
       type: Number,
@@ -16,8 +16,8 @@ const blockSchema = new mongoose.Schema(
   { timestamps: true }
 );
 //calling plugins
-blockSchema.plugin(format, "toJSON");
+buildingSchema.plugin(format, "toJSON");
 blockSchema.plugin(format, "toObject");
 
-const Block = new mongoose.model("BlockNumber", blockSchema);
+const Block = new mongoose.model("BlockNumber", buildingSchema);
 export { Block };
