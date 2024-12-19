@@ -1,5 +1,4 @@
 import bcrypt from "bcryptjs";
-import { User } from "../userModel";
 //define plugin to hash password
 function hashPassword(schema) {
   schema.pre("save", async function (next) {
@@ -23,6 +22,9 @@ const format = (schema, option) => {
   }
   schema.set(option, {
     transform: (doc, ret) => {
+      if (ret.password) {
+        delete ret.password;
+      }
       delete ret.createdAt;
       delete ret.updatedAt;
       ret.id = ret._id.toString();
@@ -63,4 +65,4 @@ const isPhoneNumberUsed = (schema) => {
     }
   };
 };
-export { hashPassword, format, isEmailUsed, isPhoneNumberUsed };
+export { hashPassword, verifyPassword, format, isEmailUsed, isPhoneNumberUsed };

@@ -1,2 +1,3 @@
-employmentTypes = ["fullTime", "contract", "partTime"];
+const employmentTypes = ["fullTime", "contract", "partTime"];
+
 export { employmentTypes };

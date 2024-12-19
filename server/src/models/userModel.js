@@ -7,6 +7,7 @@ import {
   format,
   isEmailUsed,
   isPhoneNumberUsed,
+  verifyPassword,
 } from "./plugins/plugins.js";
 
 const userSchema = new mongoose.Schema(
@@ -63,7 +64,7 @@ const userSchema = new mongoose.Schema(
         }
       },
     },
-    roles: {
+    role: {
       type: String,
       required: [true, "User role is required"],
       enum: roles,
@@ -83,6 +84,7 @@ const userSchema = new mongoose.Schema(
 
 // Add plugins
 userSchema.plugin(hashPassword);
+userSchema.plugin(verifyPassword);
 userSchema.plugin(format, "toJSON");
 userSchema.plugin(format, "toObject");
 userSchema.plugin(isEmailUsed);
