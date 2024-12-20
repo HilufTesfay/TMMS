@@ -17,7 +17,7 @@ const buildingSchema = new mongoose.Schema(
 );
 //calling plugins
 buildingSchema.plugin(format, "toJSON");
-blockSchema.plugin(format, "toObject");
+buildingSchema.plugin(format, "toObject");
 
 const Block = new mongoose.model("BlockNumber", buildingSchema);
 export { Block };

@@ -1,4 +1,4 @@
-import { userService } from "../services.js";
+import { userService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
 //define function to create user
 const createUser = handleCatchError(async (req, res) => {

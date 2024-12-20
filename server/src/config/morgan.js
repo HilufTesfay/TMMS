@@ -1,4 +1,3 @@
-import { json } from "express";
 import { httpLogger } from "./logger.js";
 //define morgan format
 const morganFormat =

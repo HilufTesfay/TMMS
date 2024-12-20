@@ -1,16 +1,15 @@
 import { app } from "./app.js";
 import { envConfig } from "./config/config.js";
 import { errorLogger } from "./config/logger.js";
+import { connectToDb } from "./config/dbConnection.js";
 
 const server = app.listen(envConfig.port, () => {
   console.log(`server is listenning at port :${envConfig.port}`);
+  connectToDb();
 });
 // define errror handler for uncaught errors
 const handleUncaughtError = (error) => {
-  if (envConfig.env === "development") {
-    console.log(error);
-  }
-  errorLogger.error(error);
+  errorLogger.error(error.stack);
   console.log("server is shuting down");
   handleExit(server);
 };
