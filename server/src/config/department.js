@@ -1,8 +1,8 @@
 const colleges = {
   engineering: {
     departments: [
-      "Software ",
       "Electrical",
+      "Software",
       "Mechanical",
       "Civil",
       "Chemical",
@@ -16,4 +16,5 @@ const colleges = {
     departments: ["IT", "Admin"],
   },
 };
+
 export { colleges };

@@ -1,5 +1,5 @@
 import { User } from "../models/index.js";
-import { CustomError } from "../utils/customError.js";
+import { CustomError } from "../utils/errorHandlers/customError.js";
 
 //define function to check request body
 const checkBody = (reqBody) => {

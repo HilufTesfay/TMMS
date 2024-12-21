@@ -26,11 +26,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       trim: true,
       required: [true, "First name is required"],
+      lowercase: true,
     },
     lastName: {
       type: String,
       trim: true,
       required: [true, "Last name is required"],
+      lowercase: true,
     },
     email: {
       type: String,
@@ -42,6 +44,7 @@ const userSchema = new mongoose.Schema(
         validator: (value) => validator.isEmail(value),
         message: "Your email is not a valid email",
       },
+      lowercase: true,
     },
     phoneNumber: {
       type: String,
@@ -52,11 +55,13 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: [true, "Employment type is required"],
       enum: employmentTypes,
+      lowercase: true,
     },
     college: {
       type: String,
       enum: Object.keys(colleges),
       required: [true, "college is required"],
+      lowercase: true,
     },
     department: {
       type: String,
@@ -67,11 +72,12 @@ const userSchema = new mongoose.Schema(
       ],
       validate: {
         validator: function (value) {
-          return colleges[this.college].department.includes(value);
+          return colleges[this.college].departments.includes(value);
         },
         message: "Department is not in the selected collage",
       },
       required: [true, "department is required"],
+      lowercase: true,
     },
     password: {
       type: String,
@@ -95,12 +101,14 @@ const userSchema = new mongoose.Schema(
       required: [true, "User role is required"],
       enum: roles,
       default: "instructor",
+      lowercase: true,
     },
     isEmailVerified: {
       type: Boolean,
       default: false,
     },
     additionalInfo: {
+      lowercase: true,
       type: mongoose.Schema.Types.Mixed,
       default: {},
     },

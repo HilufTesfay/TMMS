@@ -5,12 +5,7 @@ import {
   validateDepartment,
 } from "./customValidation.js";
 import { colleges } from "../config/department.js";
-const validCollages = Object.values(collages);
-const validDepartments = [
-  ...colleges.engineering.departments,
-  ...colleges.science.departments,
-  ...colleges.staff.departments,
-];
+const validColleges = Object.keys(colleges);
 const createUser = {
   body: Joi.object().keys({
     userId: Joi.string().required(),
@@ -24,11 +19,8 @@ const createUser = {
     role: Joi.string().required().default("user"),
     college: Joi.string()
       .required()
-      .valid(...validCollages),
-    department: Joi.string()
-      .required()
-      .valid(...validDepartments)
-      .custom(validateDepartment),
+      .valid(...validColleges),
+    department: Joi.string().required().custom(validateDepartment),
     password: Joi.string()
       .required()
       .min(8)

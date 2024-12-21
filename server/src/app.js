@@ -1,7 +1,7 @@
 import express from "express";
 import { morganFormat, stream } from "./config/morgan.js";
 import morgan from "morgan";
-import { CustomError } from "./utils/customError.js";
+import { CustomError } from "./utils/index.js";
 import { convertError, handleGlobalError } from "./middlewares/index.js";
 import { APIRouter } from "./routes/index.js";
 
