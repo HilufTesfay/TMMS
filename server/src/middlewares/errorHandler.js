@@ -3,7 +3,14 @@ import mongoose, { MongooseError } from "mongoose";
 import { envConfig } from "../config/config.js";
 import { CustomError } from "../utils/index.js";
 import { errorLogger } from "../config/logger.js";
-
+//define heleper function to handle error logging
+const logError = (error) => {
+  errorLogger.error("error details", {
+    errorName: error.name,
+    message: error.message,
+    stack: error.stack,
+  });
+};
 //define object of error handlers for mongoose error
 const mongooseErrorHandlers = {
   //Handle ValidationError
@@ -70,32 +77,26 @@ const convertError = (error, req, res, next) => {
     const handleError =
       mongooseErrorHandlers[error.name] || mongooseErrorHandlers.unknownError;
     const { statusCode, message } = handleError(error);
-    const err = new CustomError(statusCode, message, true);
-    return next(err);
+    logError(error);
+    return next(new CustomError(statusCode, message, true));
   }
   //check if the error is found in the authentication error
   if (error.name in authenticationErrorHandlers) {
+    logError(error);
     return next(new authenticationErrorHandlers[error.name]());
   }
   //check if the error is found in the generic errors
   if (error.name in genericErrorHandlers) {
+    logError(error);
     return next(genericErrorHandlers[error.name]());
   }
   //log for unknown errors
-  errorLogger.error("error details", {
-    errorName: error.name,
-    message: error.message,
-    stack: error.stack,
-  });
+  logError(error);
   next(new CustomError(500, "something went wrong", true));
 };
 //define global error handler
 const handleGlobalError = (error, req, res, next) => {
-  errorLogger.error("error details", {
-    errorName: error.name,
-    message: error.message,
-    stack: error.stack,
-  });
+  logError(error);
   const response = {
     message:
       error.isOperational === false ? "something went wrong" : error.message,

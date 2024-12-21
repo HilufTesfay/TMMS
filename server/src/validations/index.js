@@ -1,2 +1,3 @@
 import { envSchema } from "./envValidation.js";
-export { envSchema };
+import userValidation from "./userValidation.js";
+export { envSchema, userValidation };

@@ -56,6 +56,7 @@ const isEmailUsed = (schema) => {
     }
   };
 };
+//define function to check if phone number is used
 const isPhoneNumberUsed = (schema) => {
   schema.statics.isPhoneNumberUsed = async function (phoneNumber) {
     try {
@@ -65,4 +66,21 @@ const isPhoneNumberUsed = (schema) => {
     }
   };
 };
-export { hashPassword, verifyPassword, format, isEmailUsed, isPhoneNumberUsed };
+//define function to check if user id is used
+const isUserIdUsed = (schema) => {
+  schema.statics.isUserIdUsed = async function (userId) {
+    try {
+      return !!(await this.findOne({ userId: userId }));
+    } catch (error) {
+      throw new Error(`user id checking failed:${error}`);
+    }
+  };
+};
+export {
+  hashPassword,
+  verifyPassword,
+  format,
+  isEmailUsed,
+  isPhoneNumberUsed,
+  isUserIdUsed,
+};

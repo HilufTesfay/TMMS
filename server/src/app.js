@@ -7,7 +7,8 @@ import { APIRouter } from "./routes/index.js";
 
 const app = express();
 app.use(express.json());
-app.use(morgan(morganFormat, { stream }));
+app.use(express.urlencoded({ extended: true }));
+//app.use(morgan(morganFormat, { stream })); //uncomment this line to enable logging
 
 app.use("/home", (req, res) => {
   res.send(" well come home");

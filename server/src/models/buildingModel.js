@@ -4,11 +4,12 @@ const buildingSchema = new mongoose.Schema(
   {
     blockNumber: {
       type: Number,
+      unique: true,
       required: true,
     },
     classRooms: [
       {
-        type: mongoose.Schema.Types.ObjectId,
+        type: Number,
         ref: "ClassRoom",
       },
     ],
