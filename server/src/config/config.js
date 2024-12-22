@@ -18,6 +18,6 @@ export const envConfig = {
     secretKey: env.SECRET_KEY,
     acessTokenExp: env.ACESS_TOKEN_EXPIRES_IN_MINUTES,
     refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
-    resetPasswordTokneExp: RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES,
+    resetPasswordTokneExp: env.RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES,
   },
 };

@@ -1,5 +1,6 @@
 import { CustomError } from "../utils/errorHandlers/customError.js";
-import { userService } from "./index.js";
+import tokenService from "./tokenService.js";
+import userService from "./userService.js";
 //define function to register admin
 const registerAdmin = async (reqBody) => {
   if (!reqBody) {

@@ -14,6 +14,7 @@ import {
 
 const userSchema = new mongoose.Schema(
   {
+    //university id
     userId: {
       type: String,
       unique: true,

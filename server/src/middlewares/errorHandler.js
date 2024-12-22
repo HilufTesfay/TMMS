@@ -45,7 +45,6 @@ const convertError = (error, req, res, next) => {
 };
 //define global error handler
 const handleGlobalError = (error, req, res, next) => {
-  logError(error);
   const response = {
     message:
       error.isOperational === false ? "something went wrong" : error.message,

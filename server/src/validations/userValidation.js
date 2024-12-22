@@ -32,12 +32,12 @@ const createUser = {
 };
 //define change password schema
 const resetPassword = {
-  params:{
-    id:Joi.string().required().custom(validateObjectId),
+  params: {
+    id: Joi.string().required().custom(validateObjectId),
   },
   body: {
-    currentPassword:Joi.string().required().min(8),
-    newPassword=Joi.string().required().min(8).custom(validatePassword);
+    currentPassword: Joi.string().required().min(8),
+    newPassword: Joi.string().required().min(8).custom(validatePassword),
   },
 };
 //define change user info schema
@@ -48,10 +48,8 @@ const changeUserInfo = {
   body: Joi.object().keys({
     userId: Joi.string(),
     email: Joi.string().email(),
-    employmentType: Joi.string()
-      .valid("full-time", "part-time", "contractor"),
-    college: Joi.string()
-      .valid(...validColleges),
+    employmentType: Joi.string().valid("full-time", "part-time", "contractor"),
+    college: Joi.string().valid(...validColleges),
     department: Joi.string().custom(validateDepartment),
   }),
 };
