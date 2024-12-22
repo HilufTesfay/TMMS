@@ -1,4 +1,5 @@
 import { colleges } from "../config/department.js";
+import mongoose from "mongoose";
 //define function to
 const validatePassword = (value, helpers) => {
   const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).+$/;
@@ -26,5 +27,16 @@ const validateDepartment = (value, helpers) => {
   }
   return helpers.message("Department is not in the selected college.");
 };
+const validateObjectId = (value, helpers) => {
+  if (!value.match(/^[0-9a-fA-F]{24}$/)) {
+    return helpers.message('"{{#label}}" must be a valid Id');
+  }
+  return value;
+};
 
-export { validatePassword, validatePhoneNumber, validateDepartment };
+export {
+  validatePassword,
+  validatePhoneNumber,
+  validateDepartment,
+  validateObjectId,
+};

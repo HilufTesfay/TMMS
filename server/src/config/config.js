@@ -14,4 +14,10 @@ export const envConfig = {
   dataBaseUrl: env.DB_CONNECTION_URL,
   env: env.NODE_ENV,
   logPath: env.LOG_FILE_PATH,
+  token: {
+    secretKey: env.SECRET_KEY,
+    acessTokenExp: env.ACESS_TOKEN_EXPIRES_IN_MINUTES,
+    refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
+    resetPasswordTokneExp: RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES,
+  },
 };

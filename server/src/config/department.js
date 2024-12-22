@@ -7,6 +7,7 @@ const colleges = {
       "Civil",
       "Chemical",
       "Electro-mechanical",
+      "Architecture",
     ],
   },
   science: {

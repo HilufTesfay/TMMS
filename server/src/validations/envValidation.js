@@ -10,6 +10,10 @@ const envSchema = Joi.object()
     LOG_FILE_PATH: Joi.string()
       .required()
       .default("D:/projects/TMMS/server/app.log"),
+    SECRET_KEY: Joi.string().required(),
+    ACESS_TOKEN_EXPIRES_IN_MINUTES: Joi.string().required(),
+    REFRESH_TOKEN_EXPIRES_IN_DAYS: Joi.string().required(),
+    RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTE: Joi.string().required(),
   })
   .unknown();
 export { envSchema };

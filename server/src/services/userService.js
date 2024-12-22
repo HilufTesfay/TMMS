@@ -5,7 +5,6 @@ import { CustomError } from "../utils/errorHandlers/customError.js";
 const checkBody = (reqBody) => {
   const { email, phoneNumber, userId } = reqBody;
   if (!email || !phoneNumber || !userId) {
-    console.error("Validation error: Missing required fields");
     throw new CustomError(400, "Missing required fields", true);
   }
 };
@@ -20,15 +19,12 @@ const createUser = async (reqBody) => {
       User.isUserIdUsed(userId),
     ]);
     if (isEmailUsed) {
-      console.error("Validation error: Email is already used");
       throw new CustomError(400, "Email is already used", true);
     }
     if (isPhoneNumberUsed) {
-      console.error("Validation error: Phone number is already used");
       throw new CustomError(400, "Phone number is already used", true);
     }
     if (isUserIdUsed) {
-      console.error("Validation error: User ID is already used");
       throw new CustomError(400, "User ID is already used", true);
     }
     const newUser = await User.create(reqBody);
@@ -37,5 +33,23 @@ const createUser = async (reqBody) => {
     throw error;
   }
 };
+//define function to get user by email
+const getUserByEmail = async (email) => {
+  const user = await User.findOne({ email: email });
+  if (!user) {
+    throw new CustomError(400, "No user found with this Email", true);
+  }
+  return user;
+};
+const getUserById = async (id) => {
+  const user = await User.findOne({ id: id });
+  if (!user) {
+    throw new CustomError(400, "No user found with this Id", true);
+  }
+};
+const updateUser = (updateData) => {
+  if (!updateData) {
+  }
+};
 
-export default { createUser };
+export default { createUser, getUserByEmail, getUserById };
