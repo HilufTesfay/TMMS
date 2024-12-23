@@ -18,7 +18,8 @@ export const envConfig = {
     secretKey: env.SECRET_KEY,
     acessTokenExp: env.ACESS_TOKEN_EXPIRES_IN_MINUTES,
     refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
-    resetPasswordTokneExp: env.RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES,
+    resetPasswordToknExp: env.RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES,
+    emailVerificationTokenEXp: env.EMAIL_VERIFICATION_TOKEN_EXPIRES_IN_SECONDS,
   },
   email: {
     host: env.EMAIL_HOST,
