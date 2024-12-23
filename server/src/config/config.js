@@ -29,4 +29,5 @@ export const envConfig = {
     password: env.USER_PASSWORD,
     appName: env.APP_NAME,
   },
+  serverUrl: env.SERVER_URL,
 };

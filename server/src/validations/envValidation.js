@@ -21,6 +21,7 @@ const envSchema = Joi.object()
     USER_EMAIL: Joi.string().required(),
     USER_PASSWORD: Joi.string().required(),
     APP_NAME: Joi.string().required(),
+    SERVER_URL: Joi.string().required(),
   })
   .unknown();
 export { envSchema };

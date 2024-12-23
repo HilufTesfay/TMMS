@@ -37,5 +37,17 @@ const sendEmail = async (recipient, subject, html) => {
     throw new CustomError(500, "Email not sent", false);
   }
 };
+//define function to send verification email
+const sendVerificationEmail = async (recipient, token) => {
+  const subject = "Email Verification";
+  const html = `<p>Click <a href="${envConfig.serverUrl}/${token}">here</a> to verify your account</p>`;
+  await sendEmail(recipient, subject, html);
+};
+//define function to send reset password email
+const sendResetPasswordEmail = async (recipient, token) => {
+  const subject = "Reset Password";
+  const html = `<p>Click <a href="${envConfig.serverUrl}/${token}">here</a> to reset your password</p>`;
+  await sendEmail(recipient, subject, html);
+};
 
-export default { sendEmail };
+export default { sendVerificationEmail, sendResetPasswordEmail };
