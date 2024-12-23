@@ -20,4 +20,13 @@ export const envConfig = {
     refreshTokenExp: env.REFRESH_TOKEN_EXPIRES_IN_DAYS,
     resetPasswordTokneExp: env.RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTES,
   },
+  email: {
+    host: env.EMAIL_HOST,
+    port: env.EMAIL_PORT,
+    secure: env.EMAIL_SECURE,
+    from: env.EMAIL_FROM,
+    user: env.USER_EMAIL,
+    password: env.USER_PASSWORD,
+    appName: env.APP_NAME,
+  },
 };

@@ -14,6 +14,13 @@ const envSchema = Joi.object()
     ACESS_TOKEN_EXPIRES_IN_MINUTES: Joi.string().required(),
     REFRESH_TOKEN_EXPIRES_IN_DAYS: Joi.string().required(),
     RESET_PASSWORD_TOKEN_EXPIRES_IN_MINUTE: Joi.string().required(),
+    EMAIL_HOST: Joi.string().required(),
+    EMAIL_PORT: Joi.number().required(),
+    EMAIL_SECURE: Joi.boolean().required(),
+    EMAIL_FROM: Joi.string().required(),
+    USER_EMAIL: Joi.string().required(),
+    USER_PASSWORD: Joi.string().required(),
+    APP_NAME: Joi.string().required(),
   })
   .unknown();
 export { envSchema };

@@ -26,4 +26,20 @@ const logIn = async (reqBody) => {
   }
   return user;
 };
-export default { registerAdmin, logIn };
+//define funcction to change password
+const resetPassword = async (reqBody) => {
+  const { userId, currentPassword, newPassword } = reqBody;
+  const user = await userService.getUserById(userId);
+  const isMatch = await user.verifyPassword(currentPassword);
+  if (!isMatch) {
+    throw new CustomError("Invalid password or user name");
+  }
+  user.password = newPassword;
+  await user.save();
+  return user;
+};
+//define function to handle forget password
+const forgetPassWord = (reqBody) => {
+  const { email } = reqBody;
+};
+export default { registerAdmin, logIn, resetPassword };
