@@ -70,7 +70,7 @@ const generateAccessToken = (id, userRole) => {
 const generateResetPasswordToken = async (id, userRole) => {
   const tokenType = tokenTypes.RESET;
   const expires = DateTime.now().plus({
-    minutes: envConfig.token.resetPasswordToknExp,
+    seconds: envConfig.token.resetPasswordToknExp,
   });
   const resetToken = generateToken(id, userRole, tokenType, expires);
   await saveToken(resetToken, id, tokenType, expires, false);
@@ -98,7 +98,7 @@ const generateEmailVerificationToken = async (id, userRole) => {
 const generateAuthToken = async (id, userRole) => {
   const accesToken = generateAccessToken(id, userRole);
   const refreshToken = await generateRefreshToken(id, userRole);
-  return { accesToken, refreshToken };
+  return { acess: accesToken, refresh: refreshToken };
 };
 
 // define function to redresh token

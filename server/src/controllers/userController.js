@@ -8,5 +8,5 @@ const createUser = handleCatchError(async (req, res) => {
   }
   return res.status(201).json({ message: "user created", user });
 });
-
+//define function to create user
 export default { createUser };

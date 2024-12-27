@@ -8,13 +8,10 @@ import { User } from "../models/userModel.js";
 //define function to register admin
 
 const registerAdmin = async (reqBody) => {
-  if (!reqBody) {
-    throw new CustomError(400, "request body is empty", true);
-  }
   reqBody.role = "admin";
   const admin = await userService.createUser(reqBody);
   const tokens = await tokenService.generateAuthToken(admin.id, admin.role);
-  verifyEmail(reqBody.email, admin);
+  await verifyEmail(reqBody.email, admin);
   return { message: "Admin created successfully", tokens };
 };
 
@@ -58,6 +55,7 @@ const forgetPassword = async (email) => {
   const user = await userService.getUserByEmail({ email: email });
   const token = tokenService.generateResetPasswordToken(user.id, user.role);
   emailService.sendResetPasswordEmail(email, token);
+  return { message: "message has sent to your email,check your email" };
 };
 
 //define function to verify email
@@ -75,11 +73,11 @@ const verifyEmail = async (email, user) => {
 
 //define function to refresh token
 
-const refreshToken = async (refreshToken, email) => {
-  if (!refreshToken || !email) {
+const refreshToken = async (refreshToken, id) => {
+  if (!refreshToken || !id) {
     throw new CustomError(400, "No refresh token found");
   }
-  const user = await userService.getUserByEmail({ email: email });
+  const user = await userService.getUserById({ id: id });
   const newTokens = await tokenService.refreshToken(refreshToken, user);
   return newTokens;
 };
@@ -99,7 +97,8 @@ const VerifyAccount = async (token, id) => {
     tokenTypes.VERIFICATION
   );
   if (String(tokenDoc.user) === String(id)) {
-    return await userService.verifyUserEmail(id);
+    await userService.verifyUserEmail(id);
+    return { message: "your acount has verified" };
   }
   throw new CustomError(403, "email verification failed", true);
 };
@@ -128,6 +127,10 @@ const changeEmail = async (email, newEmail) => {
   }
   await user.unVerifyEmail();
   await verifyEmail(email, user);
+  return {
+    message:
+      "verification email has sent to your new email,check your eamil and verify your acount.",
+  };
 };
 
 export default {

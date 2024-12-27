@@ -1,5 +1,3 @@
-import { object } from "joi";
-import { emailLogger } from "../config/logger.js";
 import { User } from "../models/index.js";
 import { CustomError } from "../utils/errorHandlers/customError.js";
 
@@ -88,8 +86,7 @@ const updateUser = async (updateData, id) => {
 //definfe function to verify user email
 const verifyUserEmail = async (id) => {
   const user = await getUserById({ id: id });
-  await user.verifyEmail();
-  return true;
+  return await user.verifyEmail();
 };
 //define function to delete user by id
 const deleteUserById = async (id) => {

@@ -18,7 +18,7 @@ const createUser = {
     employmentType: Joi.string()
       .required()
       .valid("full-time", "part-time", "contractor"),
-    role: Joi.string().default("user"),
+    role: Joi.string().default("instructor"),
     college: Joi.string()
       .required()
       .valid(...validColleges),
@@ -30,21 +30,23 @@ const createUser = {
     additionalInfo: Joi.object().keys({}).optional(),
   }),
 };
-//define change password schema
-const resetPassword = {
-  params: {
+//defien getUserByEmail schema
+const getUserByEmail = {
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+  }),
+};
+//defien getUserById schema
+const getUserById = {
+  params: Joi.object().keys({
     id: Joi.string().required().custom(validateObjectId),
-  },
-  body: {
-    currentPassword: Joi.string().required().min(8),
-    newPassword: Joi.string().required().min(8).custom(validatePassword),
-  },
+  }),
 };
 //define change user info schema
 const changeUserInfo = {
-  params: {
+  params: Joi.object().keys({
     id: Joi.string().required().custom(validateObjectId),
-  },
+  }),
   body: Joi.object().keys({
     userId: Joi.string(),
     email: Joi.string().email(),

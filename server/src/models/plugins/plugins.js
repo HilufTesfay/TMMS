@@ -55,6 +55,7 @@ const verifyEmail = (schema) => {
       throw new CustomError(404, "email not found", true);
     }
     this.isEmailVerified = true;
+    return this.isEmailVerified;
   };
 };
 
@@ -65,6 +66,7 @@ const unVerifyEmail = (schema) => {
       throw new CustomError(404, "email not found", true);
     }
     this.isEmailVerified = false;
+    return this.isEmailVerified;
   };
   return { message: "successfully un verified" };
 };
