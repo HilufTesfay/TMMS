@@ -10,6 +10,7 @@ import {
   isPhoneNumberUsed,
   verifyPassword,
   isUserIdUsed,
+  verifyEmail,
 } from "./plugins/plugins.js";
 
 const userSchema = new mongoose.Schema(
@@ -125,6 +126,7 @@ userSchema.plugin(format, "toObject");
 userSchema.plugin(isEmailUsed);
 userSchema.plugin(isPhoneNumberUsed);
 userSchema.plugin(isUserIdUsed);
+userSchema.plugin(verifyEmail);
 
 const User = mongoose.model("User", userSchema);
 export { User };

@@ -2,6 +2,7 @@ import { CustomError } from "../utils/errorHandlers/customError.js";
 import tokenService from "./tokenService.js";
 import userService from "./userService.js";
 import emailService from "./emailService.js";
+import { tokenTypes } from "../config/tokenTypes.js";
 //define function to register admin
 const registerAdmin = async (reqBody) => {
   if (!reqBody) {
@@ -26,11 +27,11 @@ const logIn = async (email, password) => {
   return { message: "login successfully", tokens };
 };
 //define funcction to change password
-const resetPassword = async (userId, currentPassword, newPassword) => {
-  if (!userId || !currentPassword || !newPassword) {
+const resetPassword = async (id, currentPassword, newPassword) => {
+  if (!id || !currentPassword || !newPassword) {
     throw new CustomError(400, "CurrentPassord and new password are required");
   }
-  const user = await userService.getUserById(userId);
+  const user = await userService.getUserById(id);
   const isMatch = await user.verifyPassword(currentPassword);
   if (!isMatch) {
     throw new CustomError(400, "Incorrect Email or password", true);
@@ -69,11 +70,29 @@ const refreshToken = async (refreshToken, email) => {
   return newTokens;
 };
 //define function logOut
-const logOut = () => {};
+const logOut = async (id) => await tokenService.invalidateAllTokens(userId);
 //define function to activate acount
-const VerifyAcount = () => {};
+const VerifyAcount = async (token, id) => {
+  if (!token || !id) {
+    throw new CustomError(400, "Token and Id are required", true);
+  }
+  const tokenDoc = await tokenService.verifyToken(
+    token,
+    tokenTypes.VERIFICATION
+  );
+  if (String(tokenDoc.user) === String(id)) {
+    return await userService.verifyUserEmail(id);
+  }
+  throw new CustomError(403, "email verification failed", true);
+};
 //define function to safely delete acount
-const deleteAcount = () => {};
+const deleteAcount = async (id) => {
+  const [res1, res2] = await Promise.all([
+    userService.deleteUserById(id),
+    tokenService.invalidateAllTokens(id),
+  ]);
+  return { message: `${res2.message} ${res1.message}` };
+};
 //define function to change email
 const changeEmail = () => {};
 export default {
@@ -82,4 +101,8 @@ export default {
   resetPassword,
   forgetPassword,
   refreshToken,
+  logOut,
+  VerifyAcount,
+  deleteAcount,
+  changeEmail,
 };

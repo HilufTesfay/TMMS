@@ -1,4 +1,6 @@
 import bcrypt from "bcryptjs";
+import { func } from "joi";
+import { CustomError } from "../../utils/errorHandlers/customError";
 //define plugin to hash password
 function hashPassword(schema) {
   schema.pre("save", async function (next) {
@@ -46,6 +48,15 @@ const verifyPassword = (schema) => {
     }
   };
 };
+//define function to verify email
+const verifyEmail = (schema) => {
+  schema.methods.verifyEmail = function () {
+    if (!this.email || typeof this.email === "object") {
+      throw new CustomError(404, "email not found", true);
+    }
+    this.isEmailVerified = true;
+  };
+};
 //define function to check if email is used
 const isEmailUsed = (schema) => {
   schema.statics.isEmailUsed = async function (email) {
@@ -83,4 +94,5 @@ export {
   isEmailUsed,
   isPhoneNumberUsed,
   isUserIdUsed,
+  verifyEmail,
 };

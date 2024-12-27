@@ -7,9 +7,9 @@ import { tokenTypes } from "../config/tokenTypes.js";
 
 const { sign, verify } = jwt;
 // define funcrion to Generate a token
-const generateToken = (userId, userRole, tokenType, expires) => {
+const generateToken = (id, userRole, tokenType, expires) => {
   const payload = {
-    sub: userId,
+    sub: id,
     role: userRole,
     type: tokenType,
     iat: DateTime.now().toUnixInteger(),
@@ -19,10 +19,10 @@ const generateToken = (userId, userRole, tokenType, expires) => {
 };
 
 // define funcrion to Save token to a data base
-const saveToken = async (token, userId, type, expires, blacklisted = false) => {
+const saveToken = async (token, id, type, expires, blacklisted = false) => {
   const tokenDoc = {
     token: token,
-    user: userId,
+    user: id,
     tokenType: type,
     expires: expires.toISO(),
     blacklisted: blacklisted,
@@ -31,10 +31,10 @@ const saveToken = async (token, userId, type, expires, blacklisted = false) => {
   return savedToken;
 };
 //define function to delete token
-const deleteToken = async (token, userId, type) => {
+const deleteToken = async (token, id, type) => {
   const tokenDoc = await Token.deleteOne({
     token: token,
-    user: userId,
+    user: id,
     type: type,
   });
   if (tokenDoc.deletedCount === 0) {
@@ -58,46 +58,46 @@ const verifyToken = async (token, tokenType) => {
 };
 
 // define funcrion to genenrate accessToken
-const generateAccessToken = (userId, userRole) => {
+const generateAccessToken = (id, userRole) => {
   const tokenType = tokenTypes.ACCESS;
   const expires = DateTime.now().plus({
     minutes: envConfig.token.acessTokenExp,
   });
-  const accessToken = generateToken(userId, userRole, tokenType, expires);
+  const accessToken = generateToken(id, userRole, tokenType, expires);
   return accessToken;
 };
 //define function to generate reset token
-const generateResetPasswordToken = async (userId, userRole) => {
+const generateResetPasswordToken = async (id, userRole) => {
   const tokenType = tokenTypes.RESET;
   const expires = DateTime.now().plus({
     minutes: envConfig.token.resetPasswordToknExp,
   });
-  const resetToken = generateToken(userId, userRole, tokenType, expires);
-  await saveToken(resetToken, userId, tokenType, expires, false);
+  const resetToken = generateToken(id, userRole, tokenType, expires);
+  await saveToken(resetToken, id, tokenType, expires, false);
   return resetToken;
 };
 //define funcrion to generate refreshtoken
-const generateRefreshToken = async (userId, userRole) => {
+const generateRefreshToken = async (id, userRole) => {
   const tokenType = tokenTypes.REFRESH;
   const expires = DateTime.now().plus({ day: envConfig.token.refreshTokenExp });
-  const refreshToken = generateToken(userId, userRole, tokenType, expires);
-  await saveToken(refreshToken, userId, tokenType, expires, false);
+  const refreshToken = generateToken(id, userRole, tokenType, expires);
+  await saveToken(refreshToken, id, tokenType, expires, false);
   return refreshToken;
 };
 //define function to genrate emailVerification Token
-const generateEmailVerificationToken = async (userId, userRole) => {
+const generateEmailVerificationToken = async (id, userRole) => {
   const tokenType = tokenTypes.VERIFICATION;
   const expires = DateTime.now().plus({
     seconds: envConfig.token.emailVerificationTokenEXp,
   });
-  const verificationToken = generateToken(userId, userRole, tokenType, expires);
-  await saveToken(verificationToken, userId, tokenType, expires);
+  const verificationToken = generateToken(id, userRole, tokenType, expires);
+  await saveToken(verificationToken, id, tokenType, expires);
   return verificationToken;
 };
 //define funcrion to generate auth tokens
-const generateAuthToken = async (userId, userRole) => {
-  const accesToken = generateAccessToken(userId, userRole);
-  const refreshToken = await generateRefreshToken(userId, userRole);
+const generateAuthToken = async (id, userRole) => {
+  const accesToken = generateAccessToken(id, userRole);
+  const refreshToken = await generateRefreshToken(id, userRole);
   return { accesToken, refreshToken };
 };
 
@@ -124,6 +124,25 @@ const isAuthenticatedToken = (token) => {
   result.userRole = payload.userRole;
   return result;
 };
+//define function to extract token from header
+const extractToken = (headers) => {
+  const token = headers["authorization"].split(" ")[1];
+  if (!token) {
+    throw new CustomError(403, "token not found", true);
+  }
+  return token;
+};
+//define function to invalidate all stored tokens in the databse
+const invalidateAllTokens = async (id) => {
+  if (!id) {
+    throw new CustomError(404, "No user id provided");
+  }
+  const deletedTokens = await Token.deleteMany({ user: id });
+  if (!deletedTokens.deletedCount) {
+    throw new CustomError(404, "token not exist");
+  }
+  return { message: "Tokens deleted successfully" };
+};
 
 export default {
   refreshToken,
@@ -131,4 +150,8 @@ export default {
   generateEmailVerificationToken,
   generateAuthToken,
   isAuthenticatedToken,
+  deleteToken,
+  extractToken,
+  invalidateAllTokens,
+  verifyToken,
 };
