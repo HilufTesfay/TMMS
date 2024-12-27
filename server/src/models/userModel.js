@@ -11,6 +11,7 @@ import {
   verifyPassword,
   isUserIdUsed,
   verifyEmail,
+  unVerifyEmail,
 } from "./plugins/plugins.js";
 
 const userSchema = new mongoose.Schema(
@@ -127,6 +128,7 @@ userSchema.plugin(isEmailUsed);
 userSchema.plugin(isPhoneNumberUsed);
 userSchema.plugin(isUserIdUsed);
 userSchema.plugin(verifyEmail);
+userSchema.plugin(unVerifyEmail);
 
 const User = mongoose.model("User", userSchema);
 export { User };

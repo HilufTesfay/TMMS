@@ -57,6 +57,17 @@ const verifyEmail = (schema) => {
     this.isEmailVerified = true;
   };
 };
+
+//define function to unverify eamil
+const unVerifyEmail = (schema) => {
+  schema.methods.unVerifyEmail = function () {
+    if (!this.email || typeof this.email === "object") {
+      throw new CustomError(404, "email not found", true);
+    }
+    this.isEmailVerified = false;
+  };
+  return { message: "successfully un verified" };
+};
 //define function to check if email is used
 const isEmailUsed = (schema) => {
   schema.statics.isEmailUsed = async function (email) {
@@ -95,4 +106,5 @@ export {
   isPhoneNumberUsed,
   isUserIdUsed,
   verifyEmail,
+  unVerifyEmail,
 };

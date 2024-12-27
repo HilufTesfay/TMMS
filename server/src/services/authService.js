@@ -3,20 +3,26 @@ import tokenService from "./tokenService.js";
 import userService from "./userService.js";
 import emailService from "./emailService.js";
 import { tokenTypes } from "../config/tokenTypes.js";
+import { User } from "../models/userModel.js";
+
 //define function to register admin
+
 const registerAdmin = async (reqBody) => {
   if (!reqBody) {
-    throw new Error("request body is empty");
+    throw new CustomError(400, "request body is empty", true);
   }
   reqBody.role = "admin";
   const admin = await userService.createUser(reqBody);
   const tokens = await tokenService.generateAuthToken(admin.id, admin.role);
+  verifyEmail(reqBody.email, admin);
   return { message: "Admin created successfully", tokens };
 };
+
 // define function to login user
-const logIn = async (email, password) => {
+
+const login = async (email, password) => {
   if (!email || !password) {
-    throw new CustomError(400, "In valid email or password", true);
+    throw new CustomError(400, "Invalid email or password", true);
   }
   const user = await userService.getUserByEmail({ email: email });
   const isMatch = await user.verifyPassword(password);
@@ -26,7 +32,9 @@ const logIn = async (email, password) => {
   const tokens = await tokenService.generateAuthToken(user.id, user.role);
   return { message: "login successfully", tokens };
 };
+
 //define funcction to change password
+
 const resetPassword = async (id, currentPassword, newPassword) => {
   if (!id || !currentPassword || !newPassword) {
     throw new CustomError(400, "CurrentPassord and new password are required");
@@ -40,7 +48,9 @@ const resetPassword = async (id, currentPassword, newPassword) => {
   await user.save();
   return { message: "password reset successfully" };
 };
+
 //define function to handle forget password
+
 const forgetPassword = async (email) => {
   if (!email) {
     throw new CustomError(400, "Email is required", true);
@@ -49,9 +59,11 @@ const forgetPassword = async (email) => {
   const token = tokenService.generateResetPasswordToken(user.id, user.role);
   emailService.sendResetPasswordEmail(email, token);
 };
+
 //define function to verify email
+
 const verifyEmail = async (email, user) => {
-  if (!email || user) {
+  if (!email || !user) {
     throw new CustomError(400, "Email is required", true);
   }
   const verificationToken = await tokenService.generateEmailVerificationToken(
@@ -60,7 +72,9 @@ const verifyEmail = async (email, user) => {
   );
   await emailService.sendVerificationEmail(email, verificationToken);
 };
+
 //define function to refresh token
+
 const refreshToken = async (refreshToken, email) => {
   if (!refreshToken || !email) {
     throw new CustomError(400, "No refresh token found");
@@ -69,10 +83,14 @@ const refreshToken = async (refreshToken, email) => {
   const newTokens = await tokenService.refreshToken(refreshToken, user);
   return newTokens;
 };
+
 //define function logOut
-const logOut = async (id) => await tokenService.invalidateAllTokens(userId);
+
+const logout = async (id) => await tokenService.invalidateAllTokens(id);
+
 //define function to activate acount
-const VerifyAcount = async (token, id) => {
+
+const VerifyAccount = async (token, id) => {
   if (!token || !id) {
     throw new CustomError(400, "Token and Id are required", true);
   }
@@ -85,7 +103,9 @@ const VerifyAcount = async (token, id) => {
   }
   throw new CustomError(403, "email verification failed", true);
 };
+
 //define function to safely delete acount
+
 const deleteAcount = async (id) => {
   const [res1, res2] = await Promise.all([
     userService.deleteUserById(id),
@@ -93,16 +113,31 @@ const deleteAcount = async (id) => {
   ]);
   return { message: `${res2.message} ${res1.message}` };
 };
+
 //define function to change email
-const changeEmail = () => {};
+
+const changeEmail = async (email, newEmail) => {
+  if (User.isEmailUsed(newEmail)) {
+    throw new CustomError(400, "This email is already used", true);
+  }
+  const user = await userService.getUserByEmail(email);
+  user.email = newEmail;
+  const savedUser = await user.save();
+  if (!savedUser) {
+    throw new CustomError(400, "email upadate failed", true);
+  }
+  await user.unVerifyEmail();
+  await verifyEmail(email, user);
+};
+
 export default {
   registerAdmin,
-  logIn,
+  login,
   resetPassword,
   forgetPassword,
   refreshToken,
-  logOut,
-  VerifyAcount,
+  logout,
+  VerifyAccount,
   deleteAcount,
   changeEmail,
 };
