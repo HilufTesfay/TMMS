@@ -78,7 +78,7 @@ const changeEmail = handleCatchError(async (req, res) => {
     message: message,
   });
 });
-export {
+export default {
   register,
   login,
   logout,

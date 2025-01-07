@@ -3,7 +3,7 @@ import { morganFormat, stream } from "./config/morgan.js";
 import morgan from "morgan";
 import { CustomError } from "./utils/index.js";
 import { convertError, handleGlobalError } from "./middlewares/index.js";
-import { APIRouter } from "./routes/index.js";
+import APIRouter from "./routes/index.js";
 
 const app = express();
 app.use(express.json());
