@@ -30,4 +30,4 @@ const tokenSchema = new mongoose.Schema(
 );
 tokenSchema.plugin(format);
 const Token = mongoose.model("Token", tokenSchema);
-export { Token };
+export default Token;

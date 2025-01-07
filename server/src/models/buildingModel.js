@@ -20,5 +20,5 @@ const buildingSchema = new mongoose.Schema(
 buildingSchema.plugin(format, "toJSON");
 buildingSchema.plugin(format, "toObject");
 
-const Block = new mongoose.model("BlockNumber", buildingSchema);
-export { Block };
+const Building = new mongoose.model("Building", buildingSchema);
+export default Block;

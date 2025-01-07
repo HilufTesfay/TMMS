@@ -6,4 +6,5 @@ const userRouter = express.Router();
 userRouter
   .route("/")
   .post(validate(userValidation.createUser), userController.createUser);
+userRouter.route("/update").post(userController.updateUser);
 export default userRouter;

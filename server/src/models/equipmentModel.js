@@ -28,4 +28,4 @@ equipSchema.plugin(format, "toJSON");
 equipSchema.plugin(format, "toObject");
 const Equipment = new mongoose.model("Equipment", equipSchema);
 
-export { Equipment };
+export default Equipment;

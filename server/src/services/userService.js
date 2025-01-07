@@ -12,26 +12,22 @@ const checkBody = (reqBody) => {
 const createUser = async (reqBody) => {
   const { email, phoneNumber, id } = reqBody;
   checkBody(reqBody);
-  try {
-    const [isEmailUsed, isPhoneNumberUsed, isUserIdUsed] = await Promise.all([
-      User.isEmailUsed(email),
-      User.isPhoneNumberUsed(phoneNumber),
-      User.isUserIdUsed(id),
-    ]);
-    if (isEmailUsed) {
-      throw new CustomError(400, "Email is already used", true);
-    }
-    if (isPhoneNumberUsed) {
-      throw new CustomError(400, "Phone number is already used", true);
-    }
-    if (isUserIdUsed) {
-      throw new CustomError(400, "User ID is already used", true);
-    }
-    const newUser = await User.create(reqBody);
-    return newUser;
-  } catch (error) {
-    throw error;
+  const [isEmailUsed, isPhoneNumberUsed, isUserIdUsed] = await Promise.all([
+    User.isEmailUsed(email),
+    User.isPhoneNumberUsed(phoneNumber),
+    User.isUserIdUsed(id),
+  ]);
+  if (isEmailUsed) {
+    throw new CustomError(400, "Email is already used", true);
   }
+  if (isPhoneNumberUsed) {
+    throw new CustomError(400, "Phone number is already used", true);
+  }
+  if (isUserIdUsed) {
+    throw new CustomError(400, "User ID is already used", true);
+  }
+  const newUser = await User.create(reqBody);
+  return newUser;
 };
 //define function to get user by email
 const getUserByEmail = async (email) => {
@@ -80,8 +76,8 @@ const updateUser = async (updateData, id) => {
   Object.keys(filteredData).forEach((key) => {
     user[key] = filteredData[key];
   });
-  await user.save();
-  return { message: "User updated successfully" };
+  const updatedUser = await user.save();
+  return { message: "User updated successfully", user: updateData };
 };
 //definfe function to verify user email
 const verifyUserEmail = async (id) => {

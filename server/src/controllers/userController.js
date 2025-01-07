@@ -8,5 +8,15 @@ const createUser = handleCatchError(async (req, res) => {
   }
   return res.status(201).json({ message: "user created", user });
 });
-//define function to create user
-export default { createUser };
+//define function to update  user
+
+const updateUser = handleCatchError(async (req, res) => {
+  const { id } = req.params;
+  const updateData = req.body;
+  const { message, user } = await userService.updateUser(updateData, id);
+  res.status(202).json({
+    message: message,
+    user: user,
+  });
+});
+export default { createUser, updateUser };

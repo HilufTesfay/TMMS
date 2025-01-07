@@ -29,4 +29,4 @@ classRoomSchema.plugin(format, "toJSON");
 classRoomSchema.plugin(format, "toObject");
 
 const ClassRoom = new mongoose.model("ClassRoom", classRoomSchema);
-export { ClassRoom };
+export default ClassRoom;
