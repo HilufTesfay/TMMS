@@ -1,4 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
+/* Add these imports to your main CSS file (e.g., index.css) */
+@import "@syncfusion/ej2-base/styles/material.css";
+@import "@syncfusion/ej2-popups/styles/material.css";
 
 @tailwind base;
 @tailwind components;

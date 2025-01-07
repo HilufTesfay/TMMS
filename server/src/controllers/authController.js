@@ -1,4 +1,3 @@
-import e from "express";
 import { authService, tokenService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
 

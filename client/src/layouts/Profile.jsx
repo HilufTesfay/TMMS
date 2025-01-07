@@ -6,6 +6,7 @@ const Profile = () => {
   const toggle = () => {
     setActiveProfile(!activeProfile);
   };
+  toggle();
   return (
     <div className="flex flex-col ">
       <ProfileIcon />

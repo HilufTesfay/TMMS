@@ -2,8 +2,8 @@ import Joi from "joi";
 import { CustomError, pick } from "../utils/index.js";
 //define validate middleware to valiadte user request against schema
 const validate = (Schema) => (req, res, next) => {
-  const validSchema = Joi.compile(Schema);
-  const validRequest = pick(req, ["body", "query", "params"]);
+  const validSchema = Joi.compile(pick(Schema, ["body", "query", "params"]));
+  const validRequest = pick(req, Object.keys(validSchema));
   const options = {
     abortEarly: false,
     allowUnknown: false,

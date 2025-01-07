@@ -1,6 +1,6 @@
 import bcrypt from "bcryptjs";
-import { func } from "joi";
-import { CustomError } from "../../utils/errorHandlers/customError";
+import { CustomError } from "../../utils/errorHandlers/customError.js";
+
 //define plugin to hash password
 function hashPassword(schema) {
   schema.pre("save", async function (next) {
