@@ -69,6 +69,9 @@ const verifyEmail = async (email, user) => {
     user.role
   );
   await emailService.sendVerificationEmail(email, verificationToken);
+  return {
+    message: "verification email has sent to your email check your email",
+  };
 };
 
 //define function to refresh token

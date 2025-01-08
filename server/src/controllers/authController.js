@@ -26,7 +26,7 @@ const logout = handleCatchError(async (req, res) => {
   const { message } = await authService.logout(id);
   res.status(204).json({ message: message });
 });
-//define middleware to reset passwor
+//define middleware to reset password
 const resetPassword = handleCatchError(async (req, res) => {
   const { id, currentPassword, newPassword } = req.body;
   const { message } = await authService.resetPassword(
@@ -47,7 +47,7 @@ const forgetPassword = handleCatchError(async (req, res) => {
 //define middleware refersh token
 const refreshToken = handleCatchError(async (req, res) => {
   const token = tokenService.extractToken(req.headers);
-  const { id } = req.params;
+  const { id } = req.body;
   const newTokens = await authService.refreshToken(token, id);
   res.status(200).json({
     newTokens,
@@ -56,7 +56,7 @@ const refreshToken = handleCatchError(async (req, res) => {
 //define middleware to verify acount
 const VerifyAccount = handleCatchError(async (req, res) => {
   const { token } = req.query;
-  const { id } = req.params;
+  const { id } = req.body;
   const { message } = await authService.VerifyAccount(token, id);
   res.status(200).json({
     message: message,
@@ -64,7 +64,7 @@ const VerifyAccount = handleCatchError(async (req, res) => {
 });
 //middleware delete Acount
 const deleteAcount = handleCatchError(async (req, res) => {
-  const { id } = req.params;
+  const { id } = req.body;
   const { message } = await authService.deleteAcount(id);
   res.status(202).json({
     message: message,

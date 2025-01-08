@@ -1,12 +1,41 @@
 import Joi from "joi";
-//define change password schema
+import { validateObjectId, validatePassword } from "./customValidation.js";
+
+//define schema for reset-password
 const resetPassword = {
-  params: {
-    id: Joi.string().required().custom(validateObjectId),
-  },
   body: {
-    currentPassword: Joi.string().required().min(8),
-    newPassword: Joi.string().required().min(8).custom(validatePassword),
+    id: Joi.string().trim().required().custom(validateObjectId),
+    currentPassword: Joi.string().trim().required(),
+    newPassword: Joi.string().trim().required().min(8).custom(validatePassword),
   },
 };
-export default { resetPassword };
+// define schema for login user
+const login = {
+  body: Joi.object().keys({
+    email: Joi.string().email().trim().required(),
+    password: Joi.string().trim().required(),
+  }),
+};
+
+//define schema for forgeot password
+
+const forgotPassword = {
+  body: Joi.object().keys({
+    email: Joi.string().email().trim().required(),
+  }),
+};
+
+//define schema for routes that use id
+const id = {
+  body: Joi.object().keys({
+    id: Joi.string().trim().required().custom(validateObjectId),
+  }),
+};
+//define schema for change email,
+const changeEmail = {
+  body: Joi.object().keys({
+    email: Joi.string().email().required(),
+    newEmail: Joi.string().email().required(),
+  }),
+};
+export default { resetPassword, login, forgotPassword, id, changeEmail };
