@@ -35,6 +35,7 @@ const format = (schema, option) => {
       if (existingTransform) {
         return existingTransform(doc, ret);
       }
+      return ret;
     },
   });
 };
@@ -50,11 +51,12 @@ const verifyPassword = (schema) => {
 };
 //define function to verify email
 const verifyEmail = (schema) => {
-  schema.methods.verifyEmail = function () {
+  schema.methods.verifyEmail = async function () {
     if (!this.email || typeof this.email === "object") {
       throw new CustomError(404, "email not found", true);
     }
     this.isEmailVerified = true;
+    await this.save();
     return this.isEmailVerified;
   };
 };

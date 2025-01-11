@@ -8,4 +8,4 @@ const authenticationErrorHandlers = {
   JsonWebTokenError: () => new CustomError(401, "Invalid token", true),
   TokenExpiredError: () => new CustomError(401, "Token Expires", true),
 };
-export { authenticationErrorHandlers };
+export default authenticationErrorHandlers;

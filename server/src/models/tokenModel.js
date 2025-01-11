@@ -28,6 +28,7 @@ const tokenSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
-tokenSchema.plugin(format);
+tokenSchema.plugin(format, "toJSON");
+tokenSchema.plugin(format, "toObject");
 const Token = mongoose.model("Token", tokenSchema);
 export default Token;

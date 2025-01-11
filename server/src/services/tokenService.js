@@ -4,6 +4,8 @@ import { envConfig } from "../config/config.js";
 import { Token } from "../models/index.js";
 import { CustomError } from "../utils/errorHandlers/customError.js";
 import { tokenTypes } from "../config/tokenTypes.js";
+import mongoose from "mongoose";
+import { object } from "joi";
 
 const { sign, verify } = jwt;
 // define funcrion to Generate a token
@@ -23,7 +25,7 @@ const saveToken = async (token, id, type, expires, blacklisted = false) => {
   const tokenDoc = {
     token: token,
     user: id,
-    tokenType: type,
+    type: type,
     expires: expires.toISO(),
     blacklisted: blacklisted,
   };
@@ -48,7 +50,7 @@ const verifyToken = async (token, tokenType) => {
   const tokenDoc = await Token.findOne({
     token: token,
     user: payload.sub,
-    tokenType: tokenType,
+    type: tokenType,
     blacklisted: false,
   });
   if (!tokenDoc) {
@@ -137,13 +139,16 @@ const invalidateAllTokens = async (id) => {
   if (!id) {
     throw new CustomError(404, "No user id provided");
   }
+  console.log(id);
   const deletedTokens = await Token.deleteMany({ user: id });
-  if (!deletedTokens.deletedCount) {
+  if (deletedTokens.deletedCount === 0) {
     throw new CustomError(404, "token not exist");
   }
   return { message: "Tokens deleted successfully" };
 };
-
+const getTokens = async () => {
+  return await Token.find({ user: id });
+};
 export default {
   refreshToken,
   generateResetPasswordToken,

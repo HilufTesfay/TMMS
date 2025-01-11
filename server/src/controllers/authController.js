@@ -24,6 +24,7 @@ const login = handleCatchError(async (req, res) => {
 const logout = handleCatchError(async (req, res) => {
   const { id } = req.body;
   const { message } = await authService.logout(id);
+  if (req.user) delete req.user;
   res.status(204).json({ message: message });
 });
 //define middleware to reset password
@@ -53,15 +54,16 @@ const refreshToken = handleCatchError(async (req, res) => {
     newTokens,
   });
 });
+
 //define middleware to verify acount
 const VerifyAccount = handleCatchError(async (req, res) => {
-  const { token } = req.query;
-  const { id } = req.body;
-  const { message } = await authService.VerifyAccount(token, id);
+  const { token } = req.body;
+  const { message } = await authService.VerifyAccount(token);
   res.status(200).json({
     message: message,
   });
 });
+
 //middleware delete Acount
 const deleteAcount = handleCatchError(async (req, res) => {
   const { id } = req.body;

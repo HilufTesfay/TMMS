@@ -5,4 +5,4 @@ const genericErrorHandlers = {
   ReferenceError: () => new CustomError(500, "Reference error:", false),
   RangeError: () => new CustomError(500, "Range error", false),
 };
-export { genericErrorHandlers };
+export default genericErrorHandlers;

@@ -3,10 +3,9 @@ import tokenService from "./tokenService.js";
 import userService from "./userService.js";
 import emailService from "./emailService.js";
 import { tokenTypes } from "../config/tokenTypes.js";
-import { User } from "../models/userModel.js";
+import { User } from "../models/index.js";
 
 //define function to register admin
-
 const registerAdmin = async (reqBody) => {
   reqBody.role = "admin";
   const admin = await userService.createUser(reqBody);
@@ -21,7 +20,7 @@ const login = async (email, password) => {
   if (!email || !password) {
     throw new CustomError(400, "Invalid email or password", true);
   }
-  const user = await userService.getUserByEmail({ email: email });
+  const user = await userService.getUserByEmail(email);
   const isMatch = await user.verifyPassword(password);
   if (!isMatch) {
     throw new CustomError(400, "Incorrect Email or password", true);
@@ -91,19 +90,20 @@ const logout = async (id) => await tokenService.invalidateAllTokens(id);
 
 //define function to activate acount
 
-const VerifyAccount = async (token, id) => {
-  if (!token || !id) {
-    throw new CustomError(400, "Token and Id are required", true);
+const VerifyAccount = async (token) => {
+  if (!token) {
+    throw new CustomError(400, "Token is required", true);
   }
   const tokenDoc = await tokenService.verifyToken(
     token,
     tokenTypes.VERIFICATION
   );
-  if (String(tokenDoc.user) === String(id)) {
-    await userService.verifyUserEmail(id);
-    return { message: "your acount has verified" };
+  if (!tokenDoc) {
+    throw new CustomError(403, "email verification failed", true);
   }
-  throw new CustomError(403, "email verification failed", true);
+  const id = tokenDoc.user;
+  const isVerified = await userService.verifyUserEmail(id);
+  return { message: "your email has verified", isVerified };
 };
 
 //define function to safely delete acount

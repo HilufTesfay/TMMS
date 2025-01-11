@@ -20,6 +20,7 @@ const validatePhoneNumber = (value, helpers) => {
   }
   return value;
 };
+
 const validateDepartment = (value, helpers) => {
   const college = helpers.state.ancestors[0].college;
   if (colleges[college] && colleges[college].departments.includes(value)) {

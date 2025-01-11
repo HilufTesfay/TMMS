@@ -3,8 +3,8 @@ import { CustomError } from "../utils/errorHandlers/customError.js";
 
 //define function to check request body
 const checkBody = (reqBody) => {
-  const { email, phoneNumber, id } = reqBody;
-  if (!email || !phoneNumber || !id) {
+  const { email, phoneNumber, userId } = reqBody;
+  if (!email || !phoneNumber || !userId) {
     throw new CustomError(400, "Missing required fields", true);
   }
 };
@@ -39,7 +39,7 @@ const getUserByEmail = async (email) => {
 };
 //define function to get user by id
 const getUserById = async (id) => {
-  const user = await User.findOne({ id: id });
+  const user = await User.findById(id);
   if (!user) {
     throw new CustomError(400, "No user found with this Id", true);
   }
@@ -81,7 +81,7 @@ const updateUser = async (updateData, id) => {
 };
 //definfe function to verify user email
 const verifyUserEmail = async (id) => {
-  const user = await getUserById({ id: id });
+  const user = await getUserById(id);
   return await user.verifyEmail();
 };
 //define function to delete user by id

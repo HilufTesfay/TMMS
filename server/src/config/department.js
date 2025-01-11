@@ -1,20 +1,20 @@
 const colleges = {
   engineering: {
     departments: [
-      "Electrical",
-      "Software",
-      "Mechanical",
-      "Civil",
-      "Chemical",
-      "Electro-mechanical",
-      "Architecture",
+      "electrical",
+      "software",
+      "mechanical",
+      "civil",
+      "chemical",
+      "electro-mechanical",
+      "architecture",
     ],
   },
   science: {
-    departments: ["Physics", "Chemistry", "Biology"],
+    departments: ["physics", "chemistry", "biology"],
   },
   staff: {
-    departments: ["IT", "Admin"],
+    departments: ["it", "admin"],
   },
 };
 

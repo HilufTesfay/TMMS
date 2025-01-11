@@ -16,4 +16,4 @@ const mongooseErrorHandlers = {
     isOperational: true,
   }),
 };
-export { mongooseErrorHandlers };
+export default mongooseErrorHandlers;

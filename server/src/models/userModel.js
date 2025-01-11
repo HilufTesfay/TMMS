@@ -131,4 +131,4 @@ userSchema.plugin(verifyEmail);
 userSchema.plugin(unVerifyEmail);
 
 const User = mongoose.model("User", userSchema);
-export export default User ;
+export default User;

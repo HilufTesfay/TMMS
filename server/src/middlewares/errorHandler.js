@@ -32,7 +32,7 @@ const convertError = (error, req, res, next) => {
   //check if the error is found in the authentication error
   if (error.name in authenticationErrorHandlers) {
     logError(error);
-    return next(new authenticationErrorHandlers[error.name]());
+    return next(authenticationErrorHandlers[error.name]());
   }
   //check if the error is found in the generic errors
   if (error.name in genericErrorHandlers) {
