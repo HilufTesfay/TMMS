@@ -4,6 +4,7 @@ import { ProfileIcon } from "./components";
 import { FiSettings } from "react-icons/fi";
 import { TooltipComponent } from "@syncfusion/ej2-react-popups";
 import "./App.css";
+import { Login } from "./pages";
 function App() {
   const aciveMenu = true;
   return (
