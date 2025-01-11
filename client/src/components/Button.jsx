@@ -1,9 +1,16 @@
 import PropTypes from "prop-types";
 const Button = ({ text, styles, onClick, type }) => {
   return (
-    <button onClick={onClick} style={styles} className="button" type={type}>
-      {text}
-    </button>
+    <div className="w-72">
+      <button
+        onClick={onClick}
+        style={styles}
+        className="button w-full"
+        type={type}
+      >
+        {text}
+      </button>
+    </div>
   );
 };
 

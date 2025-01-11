@@ -40,6 +40,7 @@ function App() {
         {/**main content */}
         <div className=" flex justify-center h-screen ml-ml-74 mt-28 w-full bg-main">
           {/*routes */}
+          <Login />
           <Routes></Routes>
         </div>
       </div>
