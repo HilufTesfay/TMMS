@@ -10,6 +10,7 @@ Router.route("/verify-email").post(authController.VerifyAccount);
 Router.route("/change-email").post(authController.changeEmail);
 Router.route("/change-password").post(authController.resetPassword);
 Router.route("/refresh-token").post(authController.refreshToken);
-Router.route("/forget-password").post(authController.forgetPassword);
+Router.route("/forgot-password").post(authController.forgotPassword);
+Router.route("/verify-passcode").post(authController.resetPassword);
 Router.route("/delete-acount").delete(authController.deleteAcount);
 export default Router;

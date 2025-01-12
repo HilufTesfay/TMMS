@@ -50,7 +50,10 @@ const sendVerificationEmail = async (recipient, token) => {
 //define function to send reset password email
 const sendResetPasswordEmail = async (recipient, token) => {
   const subject = "Reset Password";
-  const html = `<p>Click <a href="${envConfig.serverUrl}/v1/auth/reset-password?token=${token}">here</a> to reset your password</p>`;
+  const html = `<form action="${envConfig.serverUrl}/v1/auth/verify-passcode" method="POST">
+    <input type="hidden" name="token" value="${token}" />
+    <button type="submit">Click here to reset your password</button>
+  </form>`;
   await sendEmail(recipient, subject, html);
 };
 

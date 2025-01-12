@@ -51,7 +51,7 @@ const forgetPassword = async (email) => {
   if (!email) {
     throw new CustomError(400, "Email is required", true);
   }
-  const user = await userService.getUserByEmail({ email: email });
+  const user = await userService.getUserByEmail(email);
   const token = tokenService.generateResetPasswordToken(user.id, user.role);
   emailService.sendResetPasswordEmail(email, token);
   return { message: "message has sent to your email,check your email" };
@@ -119,11 +119,12 @@ const deleteAcount = async (id) => {
 //define function to change email
 
 const changeEmail = async (email, newEmail) => {
-  if (User.isEmailUsed(newEmail)) {
+  if (await User.isEmailUsed(newEmail)) {
     throw new CustomError(400, "This email is already used", true);
   }
   const user = await userService.getUserByEmail(email);
   user.email = newEmail;
+  user.isEmailVerified = false;
   const savedUser = await user.save();
   if (!savedUser) {
     throw new CustomError(400, "email upadate failed", true);

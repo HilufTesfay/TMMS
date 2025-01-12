@@ -4,8 +4,6 @@ import { envConfig } from "../config/config.js";
 import { Token } from "../models/index.js";
 import { CustomError } from "../utils/errorHandlers/customError.js";
 import { tokenTypes } from "../config/tokenTypes.js";
-import mongoose from "mongoose";
-import { object } from "joi";
 
 const { sign, verify } = jwt;
 // define funcrion to Generate a token
@@ -139,7 +137,6 @@ const invalidateAllTokens = async (id) => {
   if (!id) {
     throw new CustomError(404, "No user id provided");
   }
-  console.log(id);
   const deletedTokens = await Token.deleteMany({ user: id });
   if (deletedTokens.deletedCount === 0) {
     throw new CustomError(404, "token not exist");

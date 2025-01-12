@@ -3,3 +3,4 @@ client/node_modules/
 server/logs
 server/test
 SRS document  (2).pdf
+server/.env

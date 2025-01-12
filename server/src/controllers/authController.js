@@ -23,9 +23,8 @@ const login = handleCatchError(async (req, res) => {
 //define logOut middleware
 const logout = handleCatchError(async (req, res) => {
   const { id } = req.body;
-  const { message } = await authService.logout(id);
-  if (req.user) delete req.user;
-  res.status(204).json({ message: message });
+  await authService.logout(id);
+  res.status(202).json({ message: "logout successfully" });
 });
 //define middleware to reset password
 const resetPassword = handleCatchError(async (req, res) => {
@@ -40,9 +39,9 @@ const resetPassword = handleCatchError(async (req, res) => {
   });
 });
 //define middleware forgetpassword
-const forgetPassword = handleCatchError(async (req, res) => {
+const forgotPassword = handleCatchError(async (req, res) => {
   const { email } = req.body;
-  const { message } = authService.forgetPassword(email);
+  const { message } = await authService.forgetPassword(email);
   res.status(200).send(message);
 });
 //define middleware refersh token
@@ -85,7 +84,7 @@ export default {
   login,
   logout,
   resetPassword,
-  forgetPassword,
+  forgotPassword,
   refreshToken,
   VerifyAccount,
   deleteAcount,

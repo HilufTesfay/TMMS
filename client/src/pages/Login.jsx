@@ -1,5 +1,5 @@
 import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
-import { SiGoogle, SiFacebook } from "react-icons/si";
+import { SiGoogle } from "react-icons/si";
 import { Input, Button } from "../components";
 import { useState } from "react";
 import { Link } from "react-router-dom";
