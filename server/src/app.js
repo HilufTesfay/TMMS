@@ -2,9 +2,8 @@ import express from "express";
 import { morganFormat, stream } from "./config/morgan.js";
 import morgan from "morgan";
 import { CustomError } from "./utils/index.js";
-import { convertError, handleGlobalError } from "./middlewares/index.js";
+import { errorHandler } from "./middlewares/index.js";
 import APIRouter from "./routes/index.js";
-
 const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -23,8 +22,8 @@ app.all("*", (req, res, next) => {
   next(error);
 });
 //call global error converter
-app.use(convertError);
+app.use(errorHandler.convertError);
 //call global error handler
-app.use(handleGlobalError);
+app.use(errorHandler.handleGlobalError);
 
 export { app };

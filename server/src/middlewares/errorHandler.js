@@ -53,4 +53,4 @@ const handleGlobalError = (error, req, res, next) => {
   res.status(error.statusCode).json(response);
 };
 
-export { handleGlobalError, convertError };
+export default { handleGlobalError, convertError };

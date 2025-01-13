@@ -1,3 +1,4 @@
+import otpGenrator from "otp-generator";
 import { CustomError } from "../utils/errorHandlers/customError.js";
 import tokenService from "./tokenService.js";
 import userService from "./userService.js";
@@ -11,7 +12,11 @@ const registerAdmin = async (reqBody) => {
   const admin = await userService.createUser(reqBody);
   const tokens = await tokenService.generateAuthToken(admin.id, admin.role);
   await verifyEmail(reqBody.email, admin);
-  return { message: "Admin created successfully", tokens };
+  return {
+    message:
+      "Admin registered successfully,we have sent you verification link to your email,verify your email",
+    tokens,
+  };
 };
 
 // define function to login user
@@ -52,8 +57,11 @@ const forgetPassword = async (email) => {
     throw new CustomError(400, "Email is required", true);
   }
   const user = await userService.getUserByEmail(email);
-  const token = tokenService.generateResetPasswordToken(user.id, user.role);
-  emailService.sendResetPasswordEmail(email, token);
+  const token = await tokenService.generateResetPasswordToken(
+    user.id,
+    user.role
+  );
+  await emailService.sendResetPasswordEmail(email, token);
   return { message: "message has sent to your email,check your email" };
 };
 
@@ -137,6 +145,14 @@ const changeEmail = async (email, newEmail) => {
   };
 };
 
+// define function to update fogoton password
+const updatePassword = async (token, newPassword) => {
+  const tokenDoc = await tokenService.verifyToken(token);
+  const user = await userService.getUserById(tokenDoc.user);
+  user.password = newPassword;
+  await user.save();
+  return { message: "password update successfully" };
+};
 export default {
   registerAdmin,
   login,
@@ -147,4 +163,5 @@ export default {
   VerifyAccount,
   deleteAcount,
   changeEmail,
+  updatePassword,
 };

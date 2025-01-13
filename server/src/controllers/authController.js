@@ -1,7 +1,6 @@
 import { response } from "express";
 import { authService, tokenService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
-import { envConfig } from "../config/config.js";
 
 //define register middleware
 const register = handleCatchError(async (req, res) => {

@@ -1,6 +1,6 @@
 const allRoles = {
   instructor: [""],
-  admin: [""],
+  admin: ["manageUsers"],
 };
 const roles = Object.keys(allRoles);
 const roleRight = new Map(Object.entries(allRoles));
