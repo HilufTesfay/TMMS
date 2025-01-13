@@ -1,5 +1,7 @@
+import { response } from "express";
 import { authService, tokenService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
+import { envConfig } from "../config/config.js";
 
 //define register middleware
 const register = handleCatchError(async (req, res) => {
@@ -26,6 +28,7 @@ const logout = handleCatchError(async (req, res) => {
   await authService.logout(id);
   res.status(202).json({ message: "logout successfully" });
 });
+
 //define middleware to reset password
 const resetPassword = handleCatchError(async (req, res) => {
   const { id, currentPassword, newPassword } = req.body;
@@ -38,6 +41,7 @@ const resetPassword = handleCatchError(async (req, res) => {
     message: message,
   });
 });
+
 //define middleware forgetpassword
 const forgotPassword = handleCatchError(async (req, res) => {
   const { email } = req.body;
@@ -79,6 +83,14 @@ const changeEmail = handleCatchError(async (req, res) => {
     message: message,
   });
 });
+//define middleware to verify password verification code
+const updatePassword = handleCatchError(async (req, res) => {
+  const { token, newPassword } = req.body;
+  const message = await authService.updatePassword(token, newPassword);
+  res.status(200).json({
+    message: message,
+  });
+});
 export default {
   register,
   login,
@@ -89,4 +101,5 @@ export default {
   VerifyAccount,
   deleteAcount,
   changeEmail,
+  updatePassword,
 };
