@@ -21,10 +21,14 @@ Router.route("/logout").delete(
 );
 Router.route("/verify-email").post(authController.VerifyAccount);
 Router.route("/change-email").post(
+  auth.auhenticate,
+  auth.ensure("manageUsers"),
   validate(authValidation.changeEmail),
   authController.changeEmail
 );
 Router.route("/change-password").post(
+  auth.auhenticate,
+  auth.ensure("manageProfile"),
   validate(authValidation.resetPassword),
   authController.resetPassword
 );
@@ -35,6 +39,8 @@ Router.route("/forgot-password").post(
 );
 Router.route("/set-password").post(authController.updatePassword);
 Router.route("/delete-acount").delete(
+  auth.auhenticate,
+  auth.ensure("manageUsers"),
   validate(authValidation.id),
   authController.deleteAcount
 );
