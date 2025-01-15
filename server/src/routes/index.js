@@ -1,6 +1,7 @@
 import express from "express";
-import userRouter from "./userRoute.js";
-import authRoute from "./authRoute.js";
+import userRouter from "./v1/userRoute.js";
+import authRoute from "./v1/authRoute.js";
+import bldRoute from "./v1/bldRoute.js";
 const APIRouter = express.Router();
 
 const routes = [
@@ -11,6 +12,10 @@ const routes = [
   {
     path: "/auth",
     route: authRoute,
+  },
+  {
+    path: "/bld",
+    route: bldRoute,
   },
 ];
 routes.forEach((route) => {

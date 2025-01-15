@@ -1,3 +1,4 @@
 import userController from "./userController.js";
 import authController from "./authController.js";
-export { userController, authController };
+import bldController from "./bldController.js";
+export { userController, authController, bldController };

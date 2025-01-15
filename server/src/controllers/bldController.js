@@ -15,3 +15,5 @@ const deleteBuilding = handleCatchError(async (req, res) => {
   const { message } = await bldService.deleteBuilding(blockNumber);
   res.status(202).json({ message: message });
 });
+
+export default { addBuilding, deleteBuilding };
