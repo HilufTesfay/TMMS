@@ -69,7 +69,7 @@ const allocateClassRoom = async (roomNumber) => {
   }
   room.isTaken = true;
   await room.save();
-  return { message: "" };
+  return { message: `class room ${roomNumber}successfully allocated ` };
 };
 //define function to deallocate class rooms
 const deallocateClassRoom = async (roomNumber) => {
@@ -79,6 +79,7 @@ const deallocateClassRoom = async (roomNumber) => {
   }
   room.isTaken = false;
   await room.save();
+  return { message: `class room ${roomNumber} successfully deallocated` };
 };
 export default {
   addClassRoom,
