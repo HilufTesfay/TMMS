@@ -42,8 +42,29 @@ const deleteClassRoom = async (roomNumber) => {
 };
 //define function to get class romms
 
-const getClassRoom = async (roomNumber) => {
-  return await ClassRoom.findOne({ roomNumber: roomNumber });
+const getClassRooms = async (roomNumber) => {
+  return await ClassRoom.findone({ roomNumber: roomNumber });
 };
-
-export default { addClassRoom, deleteClassRoom, getClassRoom };
+//define function that returns taken class rooms
+const getTakenClassRooms = async () => {
+  const takenClassRooms = await ClassRoom.find({ isTaken: true });
+  if (Object.keys(takenClassRooms).length === 0) {
+    throw new CustomError(200, "", true);
+  }
+  return { takenClassRooms: takenClassRooms };
+};
+//define function that returns available classrooms
+const getAvailableClassRooms = async () => {
+  const availableClassRooms = await ClassRoom.find({ isTaken: false });
+  if (Object.keys(availableClassRooms).length === 0) {
+    throw new CustomError(200, "", true);
+  }
+  return { availableClassRooms: availableClassRooms };
+};
+export default {
+  addClassRoom,
+  deleteClassRoom,
+  getClassRoom,
+  getAvailableClassRooms,
+  getTakenClassRooms,
+};
