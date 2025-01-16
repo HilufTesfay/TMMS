@@ -6,8 +6,8 @@ const classRoomSchema = new mongoose.Schema(
       type: Number,
       required: [true, "Room number is required"],
     },
-    buildingNumber: {
-      type: mongoose.Schema.Types.ObjectId,
+    blockNumber: {
+      type: Number,
       ref: "Building",
       required: [true, "Building number is required"],
     },

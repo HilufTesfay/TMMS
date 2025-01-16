@@ -35,6 +35,7 @@ const deleteClassRoom = async (roomNumber) => {
   if (deletedClassRoom.deletedCount === 0) {
     throw new CustomError(400, "unable to delete building", true);
   }
+  console.log(deletedClassRoom);
   return {
     message: `class room ${deleteClassRoom.roomNumber} deleted succcessfully`,
   };

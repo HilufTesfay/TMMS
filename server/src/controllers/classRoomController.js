@@ -1,4 +1,3 @@
-import { ClassRoom } from "../models/index.js";
 import { classRoomService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
 
@@ -9,7 +8,8 @@ const addClassRoom = handleCatchError(async (req, res) => {
     message: message,
   });
 });
-//define  middleware to dele class romm
+
+//define  middleware to delete class romm
 const deleteClassRoom = handleCatchError(async (req, res) => {
   const { roomNumber } = req.body;
   const { message } = await classRoomService.deleteClassRoom(roomNumber);
