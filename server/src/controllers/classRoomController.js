@@ -17,4 +17,5 @@ const deleteClassRoom = handleCatchError(async (req, res) => {
     message: message,
   });
 });
+
 export default { addClassRoom, deleteClassRoom };

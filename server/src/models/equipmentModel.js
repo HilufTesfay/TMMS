@@ -19,6 +19,7 @@ const equipSchema = new mongoose.Schema(
     roomNumber: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "ClassRoom",
+      required: true,
     },
   },
   { timestamps: true }
