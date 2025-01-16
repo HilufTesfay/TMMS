@@ -61,10 +61,31 @@ const getAvailableClassRooms = async () => {
   }
   return { availableClassRooms: availableClassRooms };
 };
+//define function to allocate class room
+const allocateClassRoom = async (roomNumber) => {
+  const room = await ClassRoom.findOne({ roomNumber: roomNumber });
+  if (room.isTaken === true) {
+    return { message: `${roomNumber} clas room has alreay taken` };
+  }
+  room.isTaken = true;
+  await room.save();
+  return { message: "" };
+};
+//define function to deallocate class rooms
+const deallocateClassRoom = async (roomNumber) => {
+  const room = await ClassRoom.findOne({ roomNumber: roomNumber });
+  if (room.isTaken === false) {
+    return { message: `${roomNumber} class room is available` };
+  }
+  room.isTaken = false;
+  await room.save();
+};
 export default {
   addClassRoom,
   deleteClassRoom,
   getClassRoom,
   getAvailableClassRooms,
   getTakenClassRooms,
+  allocateClassRoom,
+  deallocateClassRoom,
 };
