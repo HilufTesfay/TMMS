@@ -39,5 +39,10 @@ const deleteClassRoom = async (roomNumber) => {
     message: `class room ${deleteClassRoom.roomNumber} deleted succcessfully`,
   };
 };
+//define function to get class romms
 
-export default { addClassRoom, deleteClassRoom };
+const getClassRoom = async (roomNumber) => {
+  return await ClassRoom.findOne({ roomNumber: roomNumber });
+};
+
+export default { addClassRoom, deleteClassRoom, getClassRoom };
