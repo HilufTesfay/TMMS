@@ -35,5 +35,9 @@ const deleteBuilding = async (blockNumber) => {
   }
   return { message: `${blockNumber} building removed successfully` };
 };
-
-export default { addBuilding, deleteBuilding };
+//define function to get building by blocknumber
+const getBuilding = async (blockNumber) => {
+  const building = await Building.findOne({ blockNumber: blockNumber });
+  return building.blockNumber;
+};
+export default { addBuilding, deleteBuilding, getBuilding };
