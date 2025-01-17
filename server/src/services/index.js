@@ -4,6 +4,7 @@ import tokenService from "./tokenService.js";
 import emailService from "./emailService.js";
 import bldService from "./bldService.js";
 import classRoomService from "./classRoomService.js";
+import equipService from "./equipService.js";
 export {
   userService,
   authService,
@@ -11,4 +12,5 @@ export {
   emailService,
   bldService,
   classRoomService,
+  equipService,
 };

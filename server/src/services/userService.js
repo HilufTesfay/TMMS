@@ -92,7 +92,11 @@ const deleteUserById = async (id) => {
   }
   return { message: "User deleted successfully" };
 };
-
+//deind=e functon to gwt all users
+const getUsers = async () => {
+  const users = await User.find({});
+  return { users: users };
+};
 export default {
   createUser,
   getUserByEmail,
@@ -100,4 +104,5 @@ export default {
   verifyUserEmail,
   updateUser,
   deleteUserById,
+  getUsers,
 };

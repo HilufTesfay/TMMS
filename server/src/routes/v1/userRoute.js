@@ -6,6 +6,7 @@ import { userController } from "../../controllers/index.js";
 const userRouter = express.Router();
 userRouter
   .route("/")
+  .get(userController.getUsers)
   .post(validate(userValidation.createUser), userController.createUser);
 userRouter
   .route("/update-profile")
