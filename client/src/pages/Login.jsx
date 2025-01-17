@@ -26,7 +26,7 @@ const Login = () => {
   };
 
   return (
-    <div className="flex flex-col mt-2 mb-2 bg-gradient-to-br from-white to-blue-50 px-8 py-10 my items-center rounded-xl shadow-xl w-full max-w-md sm:px-12 sm:py-14 md:max-w-lg lg:max-w-xl">
+    <div className="flex flex-col mt-2 mb-2 ml-auto mr-auto bg-gradient-to-br from-white to-blue-50 px-8 py-10 my items-center rounded-xl shadow-xl w-full max-w-md sm:px-12 sm:py-14 md:max-w-lg lg:max-w-xl">
       <h1 className="text-3xl font-extrabold text-blue-600 mb-4 sm:text-4xl md:mb-6">
         Welcome Back!
       </h1>

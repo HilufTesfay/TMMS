@@ -1,10 +1,11 @@
-import { FaBars } from "react-icons/fa";
-import { Search } from "../components";
-
+import { Search, FaIcon } from "../components";
+import { ActiveMenuProvider } from "../context";
 const Navbar = () => {
   return (
     <header className="flex gap-10 justify-between items-center ">
-      <FaBars size={40} className=" hover:cursor-pointer text-gray-500 m" />
+      <ActiveMenuProvider>
+        <FaIcon />
+      </ActiveMenuProvider>
       <Search />
     </header>
   );
