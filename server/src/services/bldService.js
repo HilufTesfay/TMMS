@@ -38,6 +38,6 @@ const deleteBuilding = async (blockNumber) => {
 //define function to get building by blocknumber
 const getBuilding = async (blockNumber) => {
   const building = await Building.findOne({ blockNumber: blockNumber });
-  return building.blockNumber;
+  return building;
 };
 export default { addBuilding, deleteBuilding, getBuilding };

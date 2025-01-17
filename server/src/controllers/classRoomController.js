@@ -25,9 +25,9 @@ const getAvailableClassRooms = handleCatchError(async (req, res) => {
 });
 
 //get taken class
-const getTakenClassRooms = handleCatchError(async () => {
+const getTakenClassRooms = handleCatchError(async (req, res) => {
   const rooms = await classRoomService.getTakenClassRooms();
-  res.status(200).json(classroms);
+  res.status(200).json(rooms);
 });
 
 //allocate class
