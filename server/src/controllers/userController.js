@@ -19,4 +19,9 @@ const updateUser = handleCatchError(async (req, res) => {
     user: user,
   });
 });
-export default { createUser, updateUser };
+//get users
+const getUsers = handleCatchError(async (req, res) => {
+  const users = await userService.getUsers();
+  res.status(200).json(users);
+});
+export default { createUser, updateUser, getUsers };
