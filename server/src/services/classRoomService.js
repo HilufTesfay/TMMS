@@ -1,6 +1,6 @@
 import { ClassRoom } from "../models/index.js";
 import { CustomError } from "../utils/index.js";
-import { bldService } from "./index.js";
+import bldService from "./bldService.js";
 //define function to check if class roo is already exist
 const isRegistered = async (roomNumber) => {
   const room = await ClassRoom.findOne({ roomNumber: roomNumber });
@@ -42,7 +42,7 @@ const deleteClassRoom = async (roomNumber) => {
 };
 //define function to get class romms
 
-const getClassRooms = async (roomNumber) => {
+const getClassRoom = async (roomNumber) => {
   return await ClassRoom.findone({ roomNumber: roomNumber });
 };
 //define function that returns taken class rooms
@@ -68,8 +68,10 @@ const allocateClassRoom = async (roomNumber) => {
     return { message: `${roomNumber} clas room has alreay taken` };
   }
   room.isTaken = true;
-  await room.save();
-  return { message: `class room ${roomNumber}successfully allocated ` };
+  const allocatedClassRoom = await room.save();
+  return {
+    message: `class room ${allocatedClassRoom.roomNumber}successfully allocated `,
+  };
 };
 //define function to deallocate class rooms
 const deallocateClassRoom = async (roomNumber) => {
