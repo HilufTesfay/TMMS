@@ -4,6 +4,7 @@ import authRoute from "./v1/authRoute.js";
 import bldRoute from "./v1/bldRoute.js";
 import classRoomRoute from "./v1/classRoomRoute.js";
 import equipRoute from "./v1/equipRoute.js";
+import bookingRoute from "./v1/bookingRoute.js";
 const APIRouter = express.Router();
 
 const routes = [
@@ -27,7 +28,12 @@ const routes = [
     path: "/equip",
     route: equipRoute,
   },
+  {
+    path: "/booking",
+    route: bookingRoute,
+  },
 ];
+
 routes.forEach((route) => {
   APIRouter.use(route.path, route.route);
 });
