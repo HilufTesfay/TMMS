@@ -7,23 +7,23 @@ import bldService from "./bldService.js";
 const createBooking = async (bookData) => {
   const { building } = bookData;
   const { room } = bookData;
-  const classRoom = await classRoomService.getClassRoom(room);
-  const block = await bldService.getBuilding(building);
-  if (!classRoom || !room) {
-    throw new CustomError(400, "This class room is not availabe", true);
-  }
+  const { message } = await classRoomService.allocateClassRoom(room, building);
+  console.log(message);
   const booking = await Booking.create(bookData);
   if (!booking) {
     throw new CustomError(400, "booking failed,please try again", true);
   }
   return booking;
 };
+
 //cancel booking
 const cancelBooking = async (id) => {
   const booking = await Booking.deleteOne({ id: id });
   if (booking.deletedCount === 0) {
     throw new CustomError(400, "unable to cancel booking", true);
   }
+  const { message } = await classRoomService.deallocateClassRoom(booking.room);
+  console.log(message);
   return { message: "booking cancel successfully" };
 };
 

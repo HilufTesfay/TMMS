@@ -4,8 +4,12 @@ import classRoomService from "./classRoomService.js";
 //define function to  register Equipment
 const registerEquipment = async (eqData) => {
   const { roomNumber } = eqData;
+  const { blockNumber } = eqData;
 
-  const classRoom = await classRoomService.getClassRoom(roomNumber);
+  const classRoom = await classRoomService.getClassRoom(
+    roomNumber,
+    blockNumber
+  );
   if (!classRoom) {
     throw new CustomError(400, `class room ${rooNumber} not found`);
   }
