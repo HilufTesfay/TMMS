@@ -29,4 +29,13 @@ const updateEquipment = async (id, eqData) => {
     throw new CustomError(400, `This equipment is mot foumd`, true);
   }
 };
-export default { updateEquipment, deleteEquipment, registerEquipment };
+//get equipments
+const getEquipments = async () => {
+  return await Equipment.find({});
+};
+export default {
+  updateEquipment,
+  deleteEquipment,
+  registerEquipment,
+  getEquipments,
+};
