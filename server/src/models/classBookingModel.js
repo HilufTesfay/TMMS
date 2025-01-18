@@ -7,6 +7,11 @@ const bookingSchem = new mongoose.Schema(
       ref: "User",
       required: [true, "instractor id is required"],
     },
+    building: {
+      type: Number,
+      ref: "Building",
+      required: [true, "Block Number is required"],
+    },
     room: {
       type: Number,
       ref: "ClassRoom",
