@@ -12,6 +12,7 @@ const registerEquipment = async (eqData) => {
   if (!equipment) {
     throw new CustomError(400, "unable to register equipment", true);
   }
+  return { message: `${equipment.name} reqistred successfully` };
 };
 //define function to  delete Equipment
 const deleteEquipment = async (id) => {
