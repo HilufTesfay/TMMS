@@ -18,7 +18,7 @@ const createBooking = async (bookData) => {
   }
   return booking;
 };
-//delete booking
+//cancel booking
 const cancelBooking = async (id) => {
   const booking = await Booking.deleteOne({ id: id });
   if (booking.deletedCount === 0) {
