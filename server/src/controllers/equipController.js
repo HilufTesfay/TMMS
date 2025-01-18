@@ -14,12 +14,21 @@ const deleteEquipment = handleCatchError(async (req, res) => {
   res.status(200).json(message);
 });
 
-//update equioment
+//update equipment
 const updateEquipment = handleCatchError(async (req, res) => {
   const { id } = req.body;
   const { body } = req;
   const { message } = await equipService.updateEquipment(id, body);
   res.status(202).json(message);
 });
-
-export default { registerEquip, updateEquipment, deleteEquipment };
+// get equipment
+const getEquipments = handleCatchError(async () => {
+  const equipments = await equipService.getEquipments();
+  res.status(200).json(equipments);
+});
+export default {
+  registerEquip,
+  updateEquipment,
+  deleteEquipment,
+  getEquipments,
+};
