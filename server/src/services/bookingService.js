@@ -4,7 +4,7 @@ import classRoomService from "./classRoomService.js";
 import bldService from "./bldService.js";
 
 // book class room
-const bookClassRoom = async (bookData) => {
+const createBooking = async (bookData) => {
   const { building } = bookData;
   const { room } = bookData;
   const classRoom = await classRoomService.getClassRoom(room);
@@ -27,4 +27,4 @@ const cancelBooking = async (id) => {
   return { message: "booking cancel successfully" };
 };
 
-export default cancelBooking;
+export default { cancelBooking, createBooking };
