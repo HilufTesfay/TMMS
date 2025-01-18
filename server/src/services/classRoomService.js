@@ -85,6 +85,10 @@ const deallocateClassRoom = async (roomNumber, blockNumber) => {
   await room.save();
   return { message: `class room ${roomNumber} successfully deallocated` };
 };
+//get all class rooms
+const getClassRooms = async () => {
+  return await ClassRoom.find({});
+};
 export default {
   addClassRoom,
   deleteClassRoom,
@@ -93,4 +97,5 @@ export default {
   getTakenClassRooms,
   allocateClassRoom,
   deallocateClassRoom,
+  getClassRooms,
 };
