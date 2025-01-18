@@ -17,7 +17,7 @@ const equipSchema = new mongoose.Schema(
       required: [true, "condition of the equipment is required"],
     },
     roomNumber: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Number,
       ref: "ClassRoom",
       required: true,
     },

@@ -48,7 +48,7 @@ const deleteClassRoom = async (roomNumber) => {
 //define function to get class romms
 
 const getClassRoom = async (roomNumber) => {
-  return await ClassRoom.findone({ roomNumber: roomNumber });
+  return await ClassRoom.findOne({ roomNumber: roomNumber });
 };
 //define function that returns taken class rooms
 const getTakenClassRooms = async () => {

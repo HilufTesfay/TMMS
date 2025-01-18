@@ -22,7 +22,7 @@ const updateEquipment = handleCatchError(async (req, res) => {
   res.status(202).json(message);
 });
 // get equipment
-const getEquipments = handleCatchError(async () => {
+const getEquipments = handleCatchError(async (req, res) => {
   const equipments = await equipService.getEquipments();
   res.status(200).json(equipments);
 });
