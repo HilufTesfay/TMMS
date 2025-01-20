@@ -67,7 +67,7 @@ const filterReqBody = (body) => {
   return filteredData;
 };
 //define function to update user data
-const updateUser = async (updateData, id) => {
+const updateUser = async (id, updateData) => {
   if (!updateData) {
     throw new CustomError(400, "No data is provided", true);
   }
