@@ -1,4 +1,3 @@
-import { response } from "express";
 import { authService, tokenService } from "../services/index.js";
 import { handleCatchError } from "../utils/index.js";
 
@@ -14,10 +13,16 @@ const register = handleCatchError(async (req, res) => {
 //define login middleware
 const login = handleCatchError(async (req, res) => {
   const { email, password } = req.body;
-  const { message, tokens } = await authService.login(email, password);
+  const { message, tokens, role, name, userId } = await authService.login(
+    email,
+    password
+  );
   res.status(200).json({
     message: message,
     tokens: tokens,
+    role: role,
+    name: name,
+    userId: userId,
   });
 });
 

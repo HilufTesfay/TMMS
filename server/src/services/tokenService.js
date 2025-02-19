@@ -98,7 +98,7 @@ const generateEmailVerificationToken = async (id, userRole) => {
 const generateAuthToken = async (id, userRole) => {
   const accesToken = generateAccessToken(id, userRole);
   const refreshToken = await generateRefreshToken(id, userRole);
-  return { acess: accesToken, refresh: refreshToken };
+  return { access: accesToken, refresh: refreshToken };
 };
 
 // define function to redresh token

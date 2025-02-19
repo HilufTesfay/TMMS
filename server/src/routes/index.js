@@ -5,6 +5,7 @@ import bldRoute from "./v1/bldRoute.js";
 import classRoomRoute from "./v1/classRoomRoute.js";
 import equipRoute from "./v1/equipRoute.js";
 import bookingRoute from "./v1/bookingRoute.js";
+import analyticRoute from "./v1/anaRoute.js";
 const APIRouter = express.Router();
 
 const routes = [
@@ -31,6 +32,10 @@ const routes = [
   {
     path: "/booking",
     route: bookingRoute,
+  },
+  {
+    path: "/analytics",
+    route: analyticRoute,
   },
 ];
 

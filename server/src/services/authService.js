@@ -31,7 +31,13 @@ const login = async (email, password) => {
     throw new CustomError(400, "Incorrect Email or password", true);
   }
   const tokens = await tokenService.generateAuthToken(user.id, user.role);
-  return { message: "login successfully", tokens };
+  return {
+    message: "login successfully",
+    tokens,
+    role: user.role,
+    name: user.firstName,
+    userId: user.userId,
+  };
 };
 
 //define funcction to change password

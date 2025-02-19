@@ -1,7 +1,7 @@
 import { logo } from "../assets";
 import { Link } from "react-router-dom";
-import { DashBordPages } from "../components";
-import { FaChalkboardTeacher } from "react-icons/fa";
+import { DashBordPages, NotificationIcon } from "../components";
+import { FaChalkboardTeacher, FaUserPlus } from "react-icons/fa";
 import { MdClass } from "react-icons/md";
 import { HiOutlineDocumentReport } from "react-icons/hi";
 import { AiOutlineBook } from "react-icons/ai";
@@ -17,17 +17,26 @@ const Dashboard = () => {
       <div className="w-full">
         <span className="ml-7">Pages</span>
         <div className="flex flex-col justify-center gap-2 items-center ml-10 mr-10 ">
+          <Link to="register">
+            <DashBordPages text="Register" icon={FaUserPlus} />
+          </Link>
           <Link to="users">
             <DashBordPages text="Instructors" icon={FaChalkboardTeacher} />
           </Link>
           <Link to="classes">
-            <DashBordPages text="Classes" icon={MdClass} />
+            <DashBordPages text="Rooms" icon={MdClass} />
           </Link>
           <Link to="equipments">
             <DashBordPages text="Teaching material" icon={AiOutlineBook} />
           </Link>
           <Link to="equipments">
             <DashBordPages text="Report" icon={HiOutlineDocumentReport} />
+          </Link>
+          <Link to="bookings">
+            <DashBordPages text="Boookings" icon={MdClass} />
+          </Link>
+          <Link to="bookings">
+            <DashBordPages text="notification" icon={NotificationIcon} />
           </Link>
         </div>
         <span className="ml-7">Tools</span>

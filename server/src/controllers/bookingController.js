@@ -9,8 +9,13 @@ const createBooking = handleCatchError(async (req, res) => {
 
 //delete booking
 const cancelBooking = handleCatchError(async (req, res) => {
-  const { message } = await bookingService.cancelBooking(req.id);
+  const { message } = await bookingService.cancelBooking(req.body.id);
   res.status(202).json(message);
 });
+//get booking
+const getBookings = handleCatchError(async (req, res) => {
+  const bookings = await bookingService.getBookings();
+  res.status(200).json(bookings);
+});
 
-export default { createBooking, cancelBooking };
+export default { createBooking, cancelBooking, getBookings };

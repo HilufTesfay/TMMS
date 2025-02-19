@@ -8,7 +8,7 @@ const Profile = () => {
   };
   toggle();
   return (
-    <div className="flex flex-col ">
+    <div className="flex flex-col items-end ">
       <ProfileIcon />
       <button>logOut</button>
       <FiSettings />

@@ -46,11 +46,14 @@ const deleteClassRoom = async (roomNumber) => {
   };
 };
 //define function to get class romms
-const getClassRoom = async (roomNumber, blockNumber) => {
-  return await ClassRoom.findOne({
+const getClassRoom = async (room, block) => {
+  const roomNumber = room;
+  const blockNumber = block;
+  const classRoom = await ClassRoom.findOne({
     roomNumber: roomNumber,
     blockNumber: blockNumber,
   });
+  return classRoom;
 };
 //define function that returns taken class rooms
 const getTakenClassRooms = async () => {
@@ -59,16 +62,22 @@ const getTakenClassRooms = async () => {
 };
 //define function that returns available classrooms
 const getAvailableClassRooms = async () => {
-  const availableClassRooms = await ClassRoom.find({ isTaken: false });
-  return { availableClassRooms: availableClassRooms };
+  const availableClassRooms = await ClassRoom.find({ isTaken: false }).populate(
+    "equipments",
+    "name condition"
+  );
+  return availableClassRooms;
 };
 //define function to allocate class room
 const allocateClassRoom = async (roomNumber, blockNumber) => {
   const room = await getClassRoom(roomNumber, blockNumber);
-
-  if (room && room.isTaken === true) {
+  if (!room) {
+    return { message: `${roomNumber} clas room is not found` };
+  }
+  if (room.isTaken === true) {
     return { message: `${roomNumber} clas room has alreay taken` };
   }
+  console.log(room);
   room.isTaken = true;
   const allocatedClassRoom = await room.save();
   return {
@@ -78,6 +87,9 @@ const allocateClassRoom = async (roomNumber, blockNumber) => {
 //define function to deallocate class rooms
 const deallocateClassRoom = async (roomNumber, blockNumber) => {
   const room = await getClassRoom(roomNumber, blockNumber);
+  if (!room) {
+    return { message: `${roomNumber} clas room is not found` };
+  }
   if (room.isTaken === false) {
     return { message: `${roomNumber} class room is available` };
   }

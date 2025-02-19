@@ -1,6 +1,7 @@
 import { Equipment } from "../models/index.js";
 import { CustomError } from "../utils/errorHandlers/customError.js";
 import classRoomService from "./classRoomService.js";
+
 //define function to  register Equipment
 const registerEquipment = async (eqData) => {
   const { roomNumber } = eqData;
@@ -11,7 +12,7 @@ const registerEquipment = async (eqData) => {
     blockNumber
   );
   if (!classRoom) {
-    throw new CustomError(400, `class room ${rooNumber} not found`);
+    throw new CustomError(400, `class room ${roomNumber} not found`);
   }
   const equipment = await Equipment.create(eqData);
   if (!equipment) {
@@ -19,6 +20,7 @@ const registerEquipment = async (eqData) => {
   }
   return { message: `${equipment.name} reqistred successfully` };
 };
+
 //define function to  delete Equipment
 const deleteEquipment = async (id) => {
   const equipment = await Equipment.deleteOne({ id: id });
@@ -27,6 +29,7 @@ const deleteEquipment = async (id) => {
   }
   return { message: "deleted Successfully" };
 };
+
 //define function to update equipment
 const updateEquipment = async (id, eqData) => {
   const equipment = await Equipment.findById(id);
@@ -40,6 +43,7 @@ const updateEquipment = async (id, eqData) => {
   await equipment.save();
   return { message: `${equipment.name} upadated successfully` };
 };
+
 //get equipments
 const getEquipments = async () => {
   return await Equipment.find({});

@@ -1,14 +1,28 @@
+import { useState } from "react";
 import { BsPersonCircle } from "react-icons/bs";
-import { TooltipComponent } from "@syncfusion/ej2-react-popups";
-const ProfileIcon = () => {
+import PropTypes from "prop-types";
+import { Profile } from "../pages";
+const ProfileIcon = ({ name }) => {
+  const [isOpen, setOpen] = useState(false);
+
+  const openModal = () => {
+    setOpen(!isOpen);
+  };
   return (
-    <TooltipComponent position="top" content="profile">
+    <div className="flex flex-col items-center ">
       <BsPersonCircle
         size={40}
-        className="text-gray-500 hover:cursor-pointer"
+        className="hover:cursor-pointer border border-blue-500 rounded-full p-1 bg-blue-500 text-white"
+        onClick={openModal}
       />
-    </TooltipComponent>
+      <span className="text-gray-500 text-sm">{name}</span>
+      {isOpen && <Profile />}
+    </div>
   );
+};
+
+ProfileIcon.propTypes = {
+  name: PropTypes.string,
 };
 
 export default ProfileIcon;

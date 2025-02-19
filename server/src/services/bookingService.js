@@ -1,7 +1,6 @@
 import { Booking } from "../models/index.js";
 import { CustomError } from "../utils/errorHandlers/customError.js";
 import classRoomService from "./classRoomService.js";
-import bldService from "./bldService.js";
 
 // book class room
 const createBooking = async (bookData) => {
@@ -18,13 +17,21 @@ const createBooking = async (bookData) => {
 
 //cancel booking
 const cancelBooking = async (id) => {
-  const booking = await Booking.deleteOne({ id: id });
-  if (booking.deletedCount === 0) {
+  console.log(id);
+  const booking = await Booking.findByIdAndDelete(id);
+  if (!booking) {
     throw new CustomError(400, "unable to cancel booking", true);
   }
-  const { message } = await classRoomService.deallocateClassRoom(booking.room);
+  const { message } = await classRoomService.deallocateClassRoom(
+    booking.room,
+    booking.building
+  );
   console.log(message);
-  return { message: "booking cancel successfully" };
+  return { message: "booking cancelled successfully" };
+};
+//get booking
+const getBookings = async () => {
+  return await Booking.find({});
 };
 
-export default { cancelBooking, createBooking };
+export default { cancelBooking, createBooking, getBookings };

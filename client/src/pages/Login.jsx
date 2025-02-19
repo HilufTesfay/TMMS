@@ -2,31 +2,54 @@ import { FaUser, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import { SiGoogle } from "react-icons/si";
 import { Input, Button } from "../components";
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { authService } from "../services";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const { login } = useAuth();
   const [email, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [field, setField] = useState(false);
+  const [error, setError] = useState("");
+  const [message, setMessage] = useState("");
+
   const handleEmailChange = (e) => setUserEmail(e.target.value);
   const handlePasswordChange = (e) => setPassword(e.target.value);
 
   const togglePasswordVisibility = () => setShowPassword((prev) => !prev);
 
-  const handleButtonClick = (event) => {
+  const handleFormSubmit = async (event) => {
     event.preventDefault(); // Prevents page reload
     if (!email || !password) {
       setField(true);
       return;
     }
     setField(false);
-    // Perform login logic here
-    console.log("Logging in with:", { email, password });
+    try {
+      const response = await authService.logIn(email, password);
+      console.log("response", response);
+      console.log("tokens", response.tokens);
+      console.log("role", response.role);
+      if (response.role && response.tokens) {
+        login();
+        setMessage("Login successful");
+        navigate("/");
+      }
+      console.log("login failed");
+    } catch (error) {
+      setError(
+        "Login error: " + (error.response?.data?.message || error.message)
+      );
+      console.log(error);
+    }
   };
 
   return (
     <div className="flex flex-col mt-2 mb-2 ml-auto mr-auto bg-gradient-to-br from-white to-blue-50 px-8 py-10 my items-center rounded-xl shadow-xl w-full max-w-md sm:px-12 sm:py-14 md:max-w-lg lg:max-w-xl">
+      {message && <p className="text-green-500">{message}</p>}
       <h1 className="text-3xl font-extrabold text-blue-600 mb-4 sm:text-4xl md:mb-6">
         Welcome Back!
       </h1>
@@ -35,7 +58,7 @@ const Login = () => {
       </p>
       <form
         className="flex flex-col w-full gap-6 items-center justify-center"
-        onSubmit={handleButtonClick}
+        onSubmit={handleFormSubmit}
       >
         <Input
           icon={FaUser}
@@ -60,7 +83,8 @@ const Login = () => {
             {showPassword ? <FaEyeSlash /> : <FaEye />}
           </button>
         </div>
-        {field && <p className="text-danger">please enter your credentials</p>}
+        {field && <p className="text-red-500">Please enter your credentials</p>}
+        {error && <p className="text-red-500">{error}</p>}
         <Button text="Sign In" type="submit" />
       </form>
       <div className="flex justify-between w-72 text-sm text-gray-500 mt-4 ">

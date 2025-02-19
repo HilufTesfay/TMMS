@@ -20,8 +20,8 @@ const deleteClassRoom = handleCatchError(async (req, res) => {
 
 //get available class
 const getAvailableClassRooms = handleCatchError(async (req, res) => {
-  const classroms = await classRoomService.getAvailableClassRooms();
-  res.status(200).json(classroms);
+  const classrooms = await classRoomService.getAvailableClassRooms();
+  res.status(200).json(classrooms);
 });
 
 //get taken class
@@ -32,8 +32,12 @@ const getTakenClassRooms = handleCatchError(async (req, res) => {
 
 //allocate class
 const allocateClassRoom = handleCatchError(async (req, res) => {
-  const { roomNumber } = req.body;
-  const { message } = await classRoomService.allocateClassRoom(roomNumber);
+  const { roomNumber, building } = req.body;
+  console.log("controller", roomNumber, building);
+  const { message } = await classRoomService.allocateClassRoom(
+    roomNumber,
+    building
+  );
   res.status(200).json(message);
 });
 
@@ -44,6 +48,12 @@ const deallocateClassRoom = handleCatchError(async (req, res) => {
   res.status(200).json(message);
 });
 
+//get class rooms
+const getClassRooms = handleCatchError(async (req, res) => {
+  const rooms = await classRoomService.getClassRooms();
+  res.status(200).json(rooms);
+});
+
 export default {
   addClassRoom,
   deleteClassRoom,
@@ -51,4 +61,5 @@ export default {
   getTakenClassRooms,
   deallocateClassRoom,
   allocateClassRoom,
+  getClassRooms,
 };

@@ -5,8 +5,8 @@ import { authValidation, userValidation } from "../../validations/index.js";
 const Router = express.Router();
 
 Router.route("/register").post(
-  auth.auhenticate,
-  auth.ensure("manageUsers"),
+  // auth.auhenticate,
+  //auth.ensure("manageUsers"),
   validate(userValidation.createUser),
   authController.register
 );

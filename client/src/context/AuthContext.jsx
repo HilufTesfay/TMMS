@@ -1,14 +1,15 @@
 import { createContext, useContext, useState } from "react";
 import PropTypes from "prop-types";
+import { authService } from "../services";
 
 const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(true);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [userRole, setUserRole] = useState(null);
   //login function
-  const login = (role) => {
-    setIsAuthenticated(true);
-    setUserRole(role);
+  const login = () => {
+    setIsAuthenticated(authService.isLoggedIn());
+    setUserRole(authService.getRole());
   };
   //logout function
   const logout = () => {

@@ -1,17 +1,71 @@
 import { useEffect, useState } from "react";
-import Table from "../components/Table";
-import { getUsers } from "../services";
-
+import { Table } from "../components";
+import { userService } from "../services";
 const columns = [
-  { Header: "ID", accessor: "userId" },
-  { Header: "Name", accessor: "firstName" },
-  { Header: "Last Name", accessor: "lastName" },
-  { Header: "Email", accessor: "email" },
-  { Header: "Phone Number", accessor: "phoneNumber" },
-  { Header: "College", accessor: "college" },
-  { Header: "Department", accessor: "department" },
-  { Header: "Employee Type", accessor: "employmentType" },
-  { Header: "Role", accessor: "role" },
+  {
+    accessorKey: "userId",
+    header: "ID",
+    size: 180,
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
+  {
+    accessorKey: "firstName",
+    header: "Name",
+    size: 180,
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
+  {
+    accessorKey: "lastName",
+    header: "Last Name",
+    size: 180,
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
+
+  {
+    accessorKey: "email",
+    header: "Email",
+    size: 180,
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    // eslint-disable-next-line react/prop-types
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
+  {
+    accessorKey: "phoneNumber",
+    header: "phone",
+    size: 180,
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
+  {
+    accessorKey: "college",
+    header: "college",
+    size: 180,
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
+  {
+    accessorKey: "department",
+    header: "department",
+    size: 180,
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
+  {
+    accessorKey: "employmentType",
+    header: "emp-type",
+    size: 180,
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
+  {
+    accessorKey: "record",
+    header: "record",
+    muiTableHeadCellProps: { sx: { color: "green" } },
+    Cell: ({ renderedCellValue }) => <strong>{renderedCellValue}</strong>,
+  },
 ];
 
 const Users = () => {
@@ -22,8 +76,8 @@ const Users = () => {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const users = await getUsers();
-        console.log(users);
+        const users = await userService.getUsers();
+        console.log("recived", users);
         setData(users.users);
       } catch (err) {
         console.log(err);

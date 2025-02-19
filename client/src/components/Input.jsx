@@ -3,8 +3,10 @@ const Input = ({
   type = "text",
   placeholder = "",
   value,
-  onChange,
   icon: Icon,
+  onChange,
+  id,
+  name,
   styles,
 }) => {
   return (
@@ -15,6 +17,8 @@ const Input = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        name={name}
+        id={id}
         className="focus:outline-none bg-inherit w-full"
         style={styles}
       />
@@ -30,6 +34,8 @@ Input.propTypes = {
   onChange: PropTypes.func.isRequired,
   icon: PropTypes.string,
   styles: PropTypes.object,
+  id: PropTypes.string,
+  name: PropTypes.string,
 };
 
 Input.defaultProps = {
